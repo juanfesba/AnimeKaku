@@ -1,1 +1,17 @@
-Welcome to AnimeKaku
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Welcome to AnimeKaku!</title>
+        <!--
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
+        -->
+    </head>
+    <body>
+        {%if name %}
+        <span class="message">Welcome to AnimeKaku, {{ name }}!</span>
+        {% else %}
+        <span class="message">Welcome to AnimeKaku</span>
+        {% endif %}
+    </body>
+</html>
