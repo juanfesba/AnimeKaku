@@ -6,12 +6,37 @@
         <!--
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
         -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     </head>
     <body>
-        {%if name %}
-        <span class="message">Welcome to AnimeKaku, {{ name }}!</span>
-        {% else %}
-        <span class="message">Welcome to AnimeKaku</span>
-        {% endif %}
+        <div id="Login_Page">
+            <br><br><br>
+            <center>
+                <img src={{ url_for('static', filename='logo_anime_kaku.png')}} alt="Anime Kaku Logo">
+            </center>
+            <br><br><br><br><br><br>
+            <center>
+        
+                <b><label for="basic-url" style="font-size:18">Choose your</label><label for="basic-url" style="font-size:18;color:red"> &nbspUsername&nbsp</label></b><span class="align-middle"><i class="material-icons" style="font-size:18px;color:gray" data-toggle="tooltip" data-placement="top" title="You can reconnect to a game by reusing the Username you had!">info_outline</i></span> <!-- TODO: Give style to the tooltip message. -->
+        
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm"></div>
+
+                        <div class="col-sm">
+                            <div class="input-group-append">
+                                <input id="input_user_name" type="text" class="form-control" placeholder="Type here..." aria-label="Type here..." aria-describedby="basic-addon1" style="text-align:center">
+                            </div>
+                        </div>
+
+                        <div class="col-sm"></div>
+                    </div>
+                </div>
+        
+                <button id="login_button" type="button" class="btn btn-danger" style="margin-top:10px">Enter</button>
+                    
+            </center>
+        </div>
     </body>
 </html>
