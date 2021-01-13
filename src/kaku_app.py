@@ -7,10 +7,10 @@ from os import environ
 load_dotenv('.env')
 
 app.config.from_mapping(
-    SECRET_KEY=environ.get('SECRET_KEY'),
-    SESSION_COOKIE_SECURE=True,
+    SECRET_KEY=environ.get('SECRET_KEY'), 
     SESSION_COOKIE_HTTPONLY=True,
-    SESSION_COOKIE_SAMESITE='Lax',
+    SESSION_COOKIE_SAMESITE='Lax', #TODO: Still having issues with this in non-incognito.
+    #TODO: make the app https, so that we can use SESSION_COOKIE_SECURE=True
 )
 
 from . import home_page
