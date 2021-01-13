@@ -19,23 +19,25 @@
             <br><br><br><br><br><br>
             <center>
         
-                <b><label for="basic-url" style="font-size:18">Choose your</label><label for="basic-url" style="font-size:18;color:red"> &nbspUsername&nbsp</label></b><span class="align-middle"><i class="material-icons" style="font-size:18px;color:gray" data-toggle="tooltip" data-placement="top" title="You can reconnect to a game by reusing the Username you had!">info_outline</i></span> <!-- TODO: Give style to the tooltip message. -->
+                <b><label for="basic-url" style="font-size:18">Choose your</label><label for="basic-url" style="font-size:18;color:red"> &nbspPlayer Name&nbsp</label></b><span class="align-middle"><i class="material-icons" style="font-size:18px;color:gray" data-toggle="tooltip" data-placement="top" title="You can reconnect to a game by reusing the Player Name you had!">info_outline</i></span> <!-- TODO: Give style to the tooltip message. -->
         
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm"></div>
+                <form method="post">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm"></div>
 
-                        <div class="col-sm">
-                            <div class="input-group-append">
-                                <input id="input_user_name" type="text" class="form-control" placeholder="Type here..." aria-label="Type here..." aria-describedby="basic-addon1" style="text-align:center">
+                            <div class="col-sm">
+                                <div class="input-group-append">
+                                    <input id="input_player_name" name="input_player_name" type="text" class="form-control" placeholder="Type here..." aria-label="Type here..." aria-describedby="basic-addon1" style="text-align:center">
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="col-sm"></div>
+                            <div class="col-sm"></div>
+                        </div>
                     </div>
-                </div>
-        
-                <button id="login_button" type="button" class="btn btn-danger" style="margin-top:10px">Enter</button>
+            
+                    <button id="login_button" type="submit" class="btn btn-danger" style="margin-top:10px">Enter</button>
+                </form>
                 
             </center>
         </div>
