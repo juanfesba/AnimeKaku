@@ -17,5 +17,14 @@ from . import home_page
 app.register_blueprint(home_page.bp)
 
 socketio = SocketIO(app, async_mode='eventlet')
+
+@socketio.on('connect')
+def handle_message(data=None):
+    print('connected')
+
+@socketio.event
+def sayHi(data=None):
+    print(data['one'])
+
 if __name__ == '__main__':
     socketio.run(app)
