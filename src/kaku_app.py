@@ -1,8 +1,10 @@
 # Entry point for the application.
-from . import app    # For application discovery by the 'flask' command.
-from flask_socketio import SocketIO
-from dotenv import load_dotenv
 from os import environ
+
+from dotenv import load_dotenv
+from flask_socketio import SocketIO
+
+from . import app  # For application discovery by the 'flask' command.
 
 load_dotenv('.env')
 
@@ -14,7 +16,10 @@ app.config.from_mapping(
 )
 
 from . import home_page
+from . import sekai_and_lobbies
+
 app.register_blueprint(home_page.bp)
+app.register_blueprint(sekai_and_lobbies.bp)
 
 socketio = SocketIO(app, async_mode='eventlet')
 

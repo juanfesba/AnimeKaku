@@ -1,14 +1,17 @@
-from flask import render_template, Blueprint, make_response, request, flash, session, redirect, url_for
+from flask import (Blueprint, make_response, redirect, render_template,
+                   request, session, url_for)
+
+from src.helpers import data_integrity
 
 bp = Blueprint('home_page', __name__)
 
 @bp.route("/", methods=("GET", "POST"))
 def home():
     if request.method == "POST":
-        input_player_name = request.form.get('input_player_name') #TODO: make this type of checks with a helper function
-        if input_player_name is None:
-            return "Did not receive any player name :c"
-        session["user_id"] = input_player_name
-        return redirect(url_for('home_page.home'))
+        if data_integrity.dictIsCorrupted(['input_player_name'], request.form):
+            return "The data was corrupted :c. Please reload the page."
+        input_player_name = str(request.form.get('input_player_name'))
+        session["player_name"] = input_player_name
+        return redirect(url_for('sekai.sekai'))
     response = make_response(render_template('home.html', name=None))
     return response
