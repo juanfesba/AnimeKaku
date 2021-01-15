@@ -1,8 +1,8 @@
-from flask import Blueprint, render_template, request, make_response, url_for, g, redirect
+from flask import (Blueprint, g, make_response, redirect, render_template,
+                   request, url_for)
 
 from src.helpers import data_integrity
 from src.session_connection import authentication
-
 
 bp = Blueprint('sekai', __name__, url_prefix="/sekai")
 
