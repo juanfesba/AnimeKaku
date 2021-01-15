@@ -13,5 +13,6 @@ def home():
         input_player_name = str(request.form.get('input_player_name'))
         session["player_name"] = input_player_name
         return redirect(url_for('sekai.sekai'))
+    #if request.method == "GET"
     response = make_response(render_template('home.html', name=None))
     return response
