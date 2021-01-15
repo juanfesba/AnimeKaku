@@ -48,12 +48,12 @@
     <script>
         var socket = io();
         socket.on('connect', function() {
-        console.log('I connected');
-        socket.emit('sayHi',{
-            one:1,
-            two:2,
-            three:3
+            console.log('I connected');
+            socket.emit('sayHi',{
+                one:1,
+                two:2,
+                three:3
+            });
         });
-    });
     </script>
 </html>
