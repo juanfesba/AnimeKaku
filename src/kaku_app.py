@@ -16,10 +16,10 @@ app.config.from_mapping(
 )
 
 from . import home_page
-from . import sekai_and_lobbies
+from . import sekai_and_category
 
 app.register_blueprint(home_page.bp)
-app.register_blueprint(sekai_and_lobbies.bp)
+app.register_blueprint(sekai_and_category.bp)
 
 socketio = SocketIO(app, async_mode='eventlet')
 
