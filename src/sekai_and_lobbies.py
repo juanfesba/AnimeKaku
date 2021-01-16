@@ -17,5 +17,12 @@ def beforeAppRequest():
 def sekai():
     if request.method == "POST":
         pass
-    response = make_response(render_template('sekai.html', name=None))
+    response = make_response(render_template('sekai.html'))
+    return response
+
+@bp.route("/<category>", methods=("GET", "POST"))
+def lobbies(category=None):
+    if request.method == "POST":
+        pass
+    response = make_response(render_template('category.html', category=category))
     return response
