@@ -1,7 +1,9 @@
 from flask import (Blueprint, g, make_response, redirect, render_template,
                    request, url_for)
 
+from src.game_logic import definitions
 from src.helpers import data_integrity
+from src.helpers import frontend
 from src.session_connection import authentication
 
 bp = Blueprint('sekai', __name__, url_prefix="/sekai")
@@ -17,7 +19,8 @@ def beforeAppRequest():
 def sekai():
     if request.method == "POST":
         pass
-    response = make_response(render_template('sekai.html'))
+    categories = frontend.fixColumnCount(definitions.categories, 3)
+    response = make_response(render_template('sekai.html', categories=categories, player_name=g.player_name))
     return response
 
 @bp.route("/<category>", methods=("GET", "POST"))

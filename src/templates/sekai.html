@@ -11,6 +11,69 @@
     </head>
 
     <body>
+
+        <div id="Categories_Page">
+
+            <br>
+            <center>
+                <img src={{ url_for('static', filename='logo_anime_kaku.png') }} alt="Anime Kaku Logo">
+            </center>
+        
+            <div class="container">
+        
+                <div class="row">
+
+                    <div class="col-sm"></div>
+                    <div class="col-sm">
+                        <center>
+                            <b><label for="basic-url" style="font-size:18">Player Name:&nbsp</label><label id="login_user_name_on_top" for="basic-url" style="font-size:18;color:red"> {{ player_name }} </label></b>
+                        </center>
+                    </div>
+                    <div class="col-sm"></div>
+
+                </div>
+                
+                <br>
+
+                {% for row in categories %}
+
+                <!-- Images used here were obtained from:
+
+                        Anime: https://japaneselevelup.com/4-kings-shonen-anime/
+                        Serie: https://www.telltalesonline.com/27957/popular-tv-series/
+                        Movie: http://www.openarticle.in/2020/07/the-best-and-amazing-movies-for-kids-to-watch/
+                        Game: https://acceleratetv.com/throwbackthursday-video-games/latest-amazing-video-game-character-collage-youtube-hd-wallpaper-cool-collage-wallpaper-1/
+                        Traditional: https://www.digitalartsonline.co.uk/features/illustration/38-tips-for-creating-stunning-black-white-art/
+
+                -->
+                <br>
+                <div class="row">
+                    
+                    {% for category in row %}
+
+                    {% set thumbnail = category ~ '_category_thumbnail.jpg' %}
+                    {% set go_to_category = '/sekai/' ~ category %}
+
+                    <div class="col-sm">
+                        <center>
+                            <div class="card" style="width: 18rem;">
+                                <img src={{ url_for('static', filename=thumbnail) }} class="card-img-top" alt="...">
+                                <hr>
+                                <div class="card-body"><a href={{ go_to_category }} class="btn btn-danger">{{ category }}</a></div>
+                            </div>
+                        </center>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+                <br>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
         
     </body>
 </html>
