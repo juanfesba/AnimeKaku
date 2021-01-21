@@ -19,13 +19,20 @@ def beforeAppRequest():
 def sekai():
     if request.method == "POST":
         pass
-    categories = frontend.fixColumnCount(definitions.categories, 3)
-    response = make_response(render_template('sekai.html', categories=categories, player_name=g.player_name))
+    category_names = frontend.fixColumnCount(definitions.category_names, 3)
+    response = make_response(render_template('sekai.html', categories=category_names, player_name=g.player_name))
     return response
 
-@bp.route("/<category>", methods=("GET", "POST"))
-def lobbies(category=None):
+@bp.route("/<category_name>", methods=("GET", "POST"))
+def lobbies(category_name=None):
     if request.method == "POST":
         pass
+    if category_name is None:
+        return "The data was corrupted :c. Please reload the page."
+    category_name = str(category_name)
+    category_name = category_name.lower()
+    if category_name not in definitions.category_names:
+        return "The data was corrupted :c. Please reload the page."
+    category = definitions.categories[category_name]
     response = make_response(render_template('category.html', category=category))
     return response
