@@ -20,7 +20,7 @@ def sekai():
     if request.method == "POST":
         pass
     category_names = frontend.fixColumnCount(definitions.category_names, 3)
-    response = make_response(render_template('sekai.html', categories=category_names, player_name=g.player_name))
+    response = make_response(render_template('sekai.html', player_name=g.player_name, categories=category_names))
     return response
 
 @bp.route("/<category_name>", methods=("GET", "POST"))
@@ -34,5 +34,5 @@ def lobbies(category_name=None):
     if category_name not in definitions.category_names:
         return "The data was corrupted :c. Please reload the page."
     category = definitions.categories[category_name]
-    response = make_response(render_template('category.html', category=category))
+    response = make_response(render_template('category.html', player_name=g.player_name, category=category))
     return response

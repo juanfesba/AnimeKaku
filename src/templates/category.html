@@ -11,6 +11,48 @@
     </head>
 
     <body>
+        <div id="Category_Page">
+            <br>
+            <center>
+                <img src={{ url_for('static', filename='logo_anime_kaku.png') }} alt="Anime Kaku Logo">
+            </center>
         
+            <div class="container">
+        
+                <div class="row">
+                    <div class="col-sm">
+                        <center>
+                            <b><label for="basic-url" style="font-size:18">Player Name:&nbsp</label><label id="login_user_name_on_top" for="basic-url" style="font-size:18;color:red"> {{ player_name }} </label></b>
+                            <b><label for="basic-url" style="font-size:18">&nbspSekai:&nbsp</label><label id="category_category_on_top" for="basic-url" style="font-size:18;color:red"> {{ category.name }} </label></b>
+                        </center>
+                    </div>
+                </div>
+                <br>
+    
+                <div class="row">
+                    <div class="col-sm"></div>
+                    
+                    <div class="col-sm">
+                    <center>
+                        <div class="input-group mb-3">
+                            <input id="input_lobby_name" type="text" class="form-control" placeholder="Type here the Lobby's Name" aria-label="Lobby's username" aria-describedby="button-addon2">
+                            <div class="input-group-append">
+                                <button id="input_create_lobby_button" class="btn btn-outline-danger" type="button">Create Lobby</button>
+                            </div>
+                        </div>
+                    </center>
+                    </div>
+
+                    <div class="col-sm"></div>
+                </div>
+            </div>
+            <hr>
+            <center>Or you can join an already created Lobby:</center>
+        
+            <div id="Category_Lobbies" class="container">
+                
+            </div>
+        
+        </div>
     </body>
 </html>
