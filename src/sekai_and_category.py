@@ -20,7 +20,9 @@ def sekai():
     if request.method == "POST":
         pass
     category_names = frontend.fixColumnCount(definitions.category_names, 3)
-    response = make_response(render_template('sekai.html', player_name=g.player_name, categories=category_names))
+    response = make_response(render_template('sekai.html',
+                                              player_name=g.player_name,
+                                              categories=category_names))
     return response
 
 @bp.route("/<category_name>", methods=("GET", "POST"))
