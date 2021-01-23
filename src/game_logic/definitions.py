@@ -6,8 +6,8 @@ class Filter():
 
 class Topic():
 
-    def __init__(self, topic_name, filters=list()):
-        self.topic_name = topic_name
+    def __init__(self, name, filters=list()):
+        self.name = name
         self.filters = filters
 
 class Category():

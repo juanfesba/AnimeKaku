@@ -31,20 +31,39 @@
     
                 <form method="post">
                     <div class="row">
-                        <div class="col-sm"></div>
+                        <div class="col-md"></div>
                         
-                        <div class="col-sm">
+                        <div class="col-md">
                         <center>
                             <div class="input-group mb-3">
-                                <input id="input_lobby_name" type="text" class="form-control" placeholder="Type here the Lobby's Name" aria-label="Lobby's username" aria-describedby="button-addon2">
+                                <input name="input_lobby_name" type="text" class="form-control" placeholder="Type here the Lobby's Name" aria-label="Lobby's username" aria-describedby="button-addon2">
                                 <div class="input-group-append">
-                                    <button id="input_create_lobby_button" class="btn btn-outline-danger" type="button">Create Lobby</button>
+                                    <button id="input_create_lobby_button" type="submit" class="btn btn-outline-danger" type="button">Create Lobby</button>
                                 </div>
                             </div>
                         </center>
                         </div>
 
-                        <div class="col-sm"></div>
+                        <div class="col-md"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+                        
+                        <center>
+                        <div class="col-md">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="input_choose_topic">Topic:</label>
+                                <select class="form-select" name="input_choose_topic">
+                                    {% for topic in category.topics %}
+                                        <option value={{ topic.name }}>&nbsp{{ topic.name }}&nbsp</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        </center>
+
+                        <div class="col-md"></div>
                     </div>
                 </form>
 
