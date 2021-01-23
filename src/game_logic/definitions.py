@@ -1,8 +1,8 @@
 class Filter():
 
-    def __init__(self, attribute, attribute_type):
+    def __init__(self, attribute, filter_type):
         self.attribute = attribute
-        self.atrribute_type = attribute_type
+        self.filter_type = filter_type
 
 class Topic():
 
