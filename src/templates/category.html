@@ -65,6 +65,78 @@
 
                         <div class="col-md"></div>
                     </div>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+
+                        <div class="col-md">
+                            <center>
+                                <br>
+                                <b>Settings:</b>
+                            </center>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+                        
+                        <center>
+                        <div class="col-md">
+                            <u>Difficulty:</u>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="difficultyCheckBox" id="difficultyCheckBox1" value="Casual" checked>
+                                <label class="form-check-label" for="difficultyCheckBox1">
+                                    Casual (Recommended)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="difficultyCheckBox" id="difficultyCheckBox2" value="Extreme">
+                                <label class="form-check-label" for="difficultyCheckBox2">
+                                    Extreme
+                                </label>
+                            </div>
+                        </div>
+                        </center>
+
+                        <div class="col-md"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+
+                        <div class="col-md">
+                            <center>
+                                <br>
+                                <b>Filters:</b>
+                            </center>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+
+                    <!--TODO: Here should be the 'if' to check if there is any Filter. -->
+
+                    {% for topic in category.topics %}
+                        {% for filter in topic.filters %}
+                            <div class="row">
+
+                                    <div class="col-md"></div>
+
+                                    <center>
+                                    <div class="col-md">
+                                        <u>{{ filter.attribute }}</u>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" checked>
+                                            <label class="form-check-label" for="inlineCheckbox1"></label>
+                                        </div>
+                                    </div>
+                                    </center>
+
+                                    <div class="col-md"></div>
+                                
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
                 </form>
 
             </div>
@@ -77,4 +149,10 @@
         
         </div>
     </body>
+
+    <script>
+        var displayFilterOnTopicSelect = function (params) {
+            
+        }
+    </script>
 </html>
