@@ -27,7 +27,7 @@ female_filter = Filter('Female', 'bool')
 romance_filter = Filter('Romance', 'bool')
 drama_filter = Filter('Drama', 'bool')
 comedy_filter = Filter('Comedy', 'bool')
-kids_filter = Filter('Kids', 'bool')
+action_filter = Filter('Action', 'bool')
 
 # Element - other info: thing, power, event, place
 
@@ -37,7 +37,7 @@ characters_topic = Topic('Characters')
 characters_topic.filters = [male_filter, female_filter]
 
 title_topic = Topic('Title')
-title_topic.filters = [romance_filter, drama_filter, comedy_filter, kids_filter]
+title_topic.filters = [romance_filter, drama_filter, comedy_filter, action_filter]
 
 element_topic = Topic('Element')
 
