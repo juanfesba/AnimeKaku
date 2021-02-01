@@ -16,6 +16,24 @@
             <center>
                 <img src={{ url_for('static', filename='logo_anime_kaku.png') }} alt="Anime Kaku Logo">
             </center>
+
+            <!--
+            <center>
+            <div style="background-color: white; position:fixed; border-color: black; border-style:solid; border-width: 1px; z-index: 1;">
+                <div class="row">
+                    <div class="col-md"></div>
+
+                    <div class="col-md">
+                        <center>
+                            <b><label for="basic-url" style="font-size:18">Player Name:&nbsp</label><label id="login_user_name_on_top" for="basic-url" style="font-size:18;color:red"> {{ player_name }} </label></b>
+                            <b><label for="basic-url" style="font-size:18">&nbspSekai:&nbsp</label><label id="category_category_on_top" for="basic-url" style="font-size:18;color:red"> {{ category.name }} </label></b>
+                        </center>
+                    </div>
+                    <div class="col-md"></div>
+                </div>
+            </div>
+            </center>
+            -->
         
             <div class="container">
         
@@ -126,7 +144,7 @@
                                     <div class="col-md">
                                         <u>{{ filter.attribute }}</u>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" id={{ filter.attribute ~ '_filter' }} value={{ filter.attribute }} checked>
+                                            <input class="form-check-input" type="checkbox" name={{ filter.attribute ~ '_' ~ topic.name ~ '_filter' }} value={{ filter.attribute }} checked>
                                             <label class="form-check-label" for={{ filter.attribute ~ '_filter' }}></label>
                                         </div>
                                     </div>
@@ -144,7 +162,9 @@
             <center>Or you can join an already created Lobby:</center>
         
             <div id="Category_Lobbies" class="container">
-                
+                x
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+                x
             </div>
         
         </div>

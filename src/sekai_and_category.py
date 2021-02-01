@@ -30,6 +30,8 @@ def lobbies(category_name=None):
     if request.method == "POST":
         print(request.form.get('input_lobby_name'))
         print(request.form.get('input_choose_topic'))
+        print(request.form.get('difficultyCheckBox'))
+        print(request.form.get('Male_Characters_filter'))
     if category_name is None:
         return "The data was corrupted :c. Please reload the page."
     category_name = str(category_name)
