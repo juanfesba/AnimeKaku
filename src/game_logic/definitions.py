@@ -36,35 +36,35 @@ action_filter = Filter('Action', 'bool')
 characters_topic = Topic('Characters')
 characters_topic.filters = [male_filter, female_filter]
 
-title_topic = Topic('Title')
-title_topic.filters = [romance_filter, drama_filter, comedy_filter, action_filter]
+titles_topic = Topic('Titles')
+titles_topic.filters = [romance_filter, drama_filter, comedy_filter, action_filter]
 
-element_topic = Topic('Element')
+elements_topic = Topic('Elements')
 
 ### Anime
 
 anime_category = Category('Anime')
-anime_category.topics = [characters_topic, title_topic, element_topic]
+anime_category.topics = [characters_topic, titles_topic, elements_topic]
 
 ### Serie
 
 serie_category = Category('Serie')
-serie_category.topics = [characters_topic, title_topic, element_topic]
+serie_category.topics = [characters_topic, titles_topic, elements_topic]
 
 ### Movie
 
 movie_category = Category('Movie')
-movie_category.topics = [characters_topic, title_topic, element_topic]
+movie_category.topics = [characters_topic, titles_topic, elements_topic]
 
 ### Game
 
 game_category = Category('Game')
-game_category.topics = [characters_topic, title_topic, element_topic]
+game_category.topics = [characters_topic, titles_topic, elements_topic]
 
 ### Traditional
 
 traditional_category = Category('Game')
-traditional_category.topics = [element_topic]
+traditional_category.topics = [elements_topic]
 
 #This are the possible 'Sekais' for players to choose.
 categories = {'serie' : serie_category,
