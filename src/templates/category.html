@@ -54,7 +54,7 @@
                         <div class="col-md">
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="input_choose_topic">Topic:</label>
-                                <select class="form-select" name="input_choose_topic">
+                                <select onchange="displayFilterOnTopicSelect()" class="form-select" id="input_choose_topic" name="input_choose_topic">
                                     {% for topic in category.topics %}
                                         <option value={{ topic.name }}>&nbsp{{ topic.name }}&nbsp</option>
                                     {% endfor %}
@@ -118,7 +118,7 @@
 
                     {% for topic in category.topics %}
                         {% for filter in topic.filters %}
-                            <div class="row">
+                            <div class={{ topic.name ~ '_filter row' }} style="display:none">
 
                                     <div class="col-md"></div>
 
@@ -151,8 +151,27 @@
     </body>
 
     <script>
-        var displayFilterOnTopicSelect = function (params) {
-            
+        var lastTopicSelected = "";
+
+        var displayElementByClass = function(className, displayValue){
+            var HtmlElementsByClass = document.getElementsByClassName(className);
+            if (HtmlElementsByClass.length>0 && HtmlElementsByClass[0] != undefined){
+                for (i = 0; i < HtmlElementsByClass.length; i++) {
+                    HtmlElementsByClass[i].style.display = displayValue;
+                }
+            }
         }
+
+        var displayFilterOnTopicSelect = function () {
+            if(lastTopicSelected != ""){
+                displayElementByClass(lastTopicSelected + '_filter', 'none');
+            }
+
+            var topicSelected = document.getElementById("input_choose_topic").value;
+            displayElementByClass(topicSelected + '_filter', 'block');
+            lastTopicSelected = topicSelected;
+        }
+
+        displayFilterOnTopicSelect();
     </script>
 </html>
