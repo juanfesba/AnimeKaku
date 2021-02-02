@@ -1,7 +1,7 @@
 from flask import (Blueprint, g, make_response, redirect, render_template,
                    request, url_for)
 
-from src.game_logic import definitions
+from src.business_logic import definitions
 from src.helpers import data_integrity
 from src.helpers import frontend
 from src.session_connection import authentication
@@ -37,9 +37,12 @@ def lobbies(category_name=None):
 
     # POST (create_lobby)
     if request.method == "POST":
-        print(request.form.get('input_lobby_name'))
-        print(request.form.get('input_choose_topic'))
-        print(request.form.get('difficultyCheckBox'))
+        if data_integrity.dictIsCorrupted(['input_lobby_name', 'input_choose_topic', 'difficulty_checkbox'], request.form):
+            return "The data was corrupted :c. Please reload the page."
+        input_lobby_name = request.form.get('input_lobby_name')
+        input_choose_topic = request.form.get('input_choose_topic')
+        difficulty_checkbox = request.form.get('difficulty_checkbox')
+        
         print(request.form.get('Male_Characters_filter'))
     
     # GET
