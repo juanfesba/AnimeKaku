@@ -73,6 +73,4 @@ categories = {'serie' : serie_category,
               'game' : game_category,
               'traditional' : traditional_category}
 
-category_names = list()
-for category_name in categories:
-    category_names.append(category_name)
+category_names = [category_name for category_name in categories]

@@ -39,8 +39,13 @@ def lobbies(category_name=None):
     if request.method == "POST":
         if data_integrity.dictIsCorrupted(['input_lobby_name', 'input_choose_topic', 'difficulty_checkbox'], request.form):
             return "The data was corrupted :c. Please reload the page."
+
         input_lobby_name = str(request.form.get('input_lobby_name'))
+        if input_lobby_name == "":
+            return "The data was corrupted :c. Please reload the page."
+
         input_choose_topic = str(request.form.get('input_choose_topic'))
+
         difficulty_checkbox = str(request.form.get('difficulty_checkbox'))
 
         print(request.form.get('Male_Characters_filter'))
