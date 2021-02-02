@@ -2,6 +2,7 @@
 from os import environ
 
 from dotenv import load_dotenv
+from flask import request, session
 from flask_socketio import SocketIO
 
 from . import app  # For application discovery by the 'flask' command.
@@ -26,6 +27,8 @@ socketio = SocketIO(app, async_mode='eventlet')
 @socketio.on('connect')
 def handle_message(data=None):
     print('connected')
+    print(request.sid)
+    print(session.get('player_name'))
 
 @socketio.event
 def sayHi(data=None):
