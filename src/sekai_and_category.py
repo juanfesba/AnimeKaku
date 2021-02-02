@@ -27,11 +27,6 @@ def sekai():
 
 @bp.route("/<category_name>", methods=("GET", "POST"))
 def lobbies(category_name=None):
-    if request.method == "POST":
-        print(request.form.get('input_lobby_name'))
-        print(request.form.get('input_choose_topic'))
-        print(request.form.get('difficultyCheckBox'))
-        print(request.form.get('Male_Characters_filter'))
     if category_name is None:
         return "The data was corrupted :c. Please reload the page."
     category_name = str(category_name)
@@ -39,5 +34,14 @@ def lobbies(category_name=None):
     if category_name not in definitions.category_names:
         return "The data was corrupted :c. Please reload the page."
     category = definitions.categories[category_name]
+
+    # POST (create_lobby)
+    if request.method == "POST":
+        print(request.form.get('input_lobby_name'))
+        print(request.form.get('input_choose_topic'))
+        print(request.form.get('difficultyCheckBox'))
+        print(request.form.get('Male_Characters_filter'))
+    
+    # GET
     response = make_response(render_template('category.html', player_name=g.player_name, category=category))
     return response

@@ -59,7 +59,7 @@ movie_category.topics = [characters_topic, titles_topic, elements_topic]
 ### Game
 
 game_category = Category('Game')
-game_category.topics = [characters_topic, titles_topic, elements_topic]
+game_category.topics = [characters_topic, titles_topic, elements_topic] #TODO: Check if we can change this to sets.
 
 ### Traditional
 
