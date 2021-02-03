@@ -2,7 +2,6 @@ from flask import (Blueprint, g, make_response, redirect, render_template,
                    request, url_for)
 
 from src.business_logic import definitions
-from src.helpers import data_integrity
 from src.helpers import frontend
 from src.session_connection import authentication
 
@@ -33,6 +32,33 @@ def lobbies(category_name=None):
     category_name = category_name.lower()
     if category_name not in definitions.category_names:
         return "The data was corrupted :c. Please reload the page."
+
+    # POST (create_lobby)
+    if request.method == "POST":
+        if 'input_lobby_name' not in request.form:
+            return "The data was corrupted :c. Please reload the page."
+
+        input_lobby_name = str(request.form.get('input_lobby_name'))
+        if input_lobby_name == "":
+            return "The data was corrupted :c. Please reload the page."
+
+        return "Creating Lobby (?)"
+
+    # GET
+    response = make_response(render_template('category.html', player_name=g.player_name, category_name=category_name))
+    return response
+
+    
+
+'''
+@bp.route("/<category_name>", methods=("GET", "POST"))
+def lobbies(category_name=None):
+    if category_name is None:
+        return "The data was corrupted :c. Please reload the page."
+    category_name = str(category_name)
+    category_name = category_name.lower()
+    if category_name not in definitions.category_names:
+        return "The data was corrupted :c. Please reload the page."
     category = definitions.categories[category_name]
 
     # POST (create_lobby)
@@ -53,3 +79,4 @@ def lobbies(category_name=None):
     # GET
     response = make_response(render_template('category.html', player_name=g.player_name, category=category))
     return response
+'''
