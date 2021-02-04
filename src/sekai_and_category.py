@@ -39,8 +39,10 @@ def lobbies(category_name=None):
             return "The data was corrupted :c. Please reload the page."
 
         input_lobby_name = str(request.form.get('input_lobby_name'))
-        if input_lobby_name == "":
+        if input_lobby_name == "" or len(input_lobby_name)>20:
             return "The data was corrupted :c. Please reload the page."
+
+        ################################################## HERE NEXT!!!!
 
         return "Creating Lobby (?)"
 

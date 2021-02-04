@@ -20,6 +20,7 @@ def home():
             return "The data was corrupted :c. Please reload the page."
         input_player_name = str(request.form.get('input_player_name'))
         session["player_name"] = input_player_name #TODO: Maybe move to authentication module when necessary.
+        session["player_id"] = authentication.generatePlayerID()
         return redirect(url_for('sekai.sekai'))
     #if request.method == "GET"
     response = make_response(render_template('home.html', name=None))
