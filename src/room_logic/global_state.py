@@ -1,0 +1,1 @@
+ROOMS_GLOBAL = dict()

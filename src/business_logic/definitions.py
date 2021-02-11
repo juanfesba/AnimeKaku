@@ -67,10 +67,10 @@ traditional_category = Category('Game')
 traditional_category.topics = [elements_topic]
 
 #This are the possible 'Sekais' for players to choose.
-categories = {'serie' : serie_category,
+CATEGORIES = {'serie' : serie_category,
               'anime' : anime_category,
               'movie' : movie_category,
               'game' : game_category,
               'traditional' : traditional_category}
 
-category_names = [category_name for category_name in categories]
+CATEGORY_NAMES = [category_name for category_name in CATEGORIES]

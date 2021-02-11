@@ -18,7 +18,7 @@ def beforeAppRequest():
 def sekai():
     if request.method == "POST":
         pass
-    category_names = frontend.fixColumnCount(definitions.category_names, 3)
+    category_names = frontend.fixColumnCount(definitions.CATEGORY_NAMES, 3)
     response = make_response(render_template('sekai.html',
                                               player_name=g.player_name,
                                               categories=category_names))
@@ -30,7 +30,7 @@ def lobbies(category_name=None):
         return "The data was corrupted :c. Please reload the page."
     category_name = str(category_name)
     category_name = category_name.lower()
-    if category_name not in definitions.category_names:
+    if category_name not in definitions.CATEGORY_NAMES:
         return "The data was corrupted :c. Please reload the page."
 
     # POST (create_lobby)
