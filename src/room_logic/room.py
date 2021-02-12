@@ -1,2 +1,6 @@
+room_id_gen = 0
+
 class Room():
-    pass
+    
+    def __init__(self):
+        pass

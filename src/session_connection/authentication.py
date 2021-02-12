@@ -1,6 +1,6 @@
-from flask import g, session
+import uuid
 
-player_id_gen = 0
+from flask import g, session
 
 def load_logged_in_user():
     player_name = session.get("player_name")
@@ -23,7 +23,5 @@ def load_logged_in_user():
         g.room_id = None
 
 def generatePlayerID():
-    global player_id_gen
-    generated_id = str(player_id_gen)
-    player_id_gen += 1
+    generated_id = str(uuid.uuid4())
     return generated_id
