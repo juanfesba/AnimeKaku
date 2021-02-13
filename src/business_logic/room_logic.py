@@ -1,5 +1,6 @@
 import uuid
 
+from business_logic import lobby_logic
 from enum import Enum
 
 class RoomNature(Enum):
@@ -16,7 +17,7 @@ class Room():
         self.room_nature = RoomNature.NONE
         self.room_root = None
 
-    def changeRoomNature(self, room_nature):
+    def initRoomNature(self, room_nature):
         if room_nature == RoomNature.CREATE_LOBBY:
             pass
 

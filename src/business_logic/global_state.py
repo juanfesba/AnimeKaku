@@ -1,1 +1,2 @@
-ROOMS_GLOBAL = dict()
+SESSIONS_TO_ROOMS = dict()
+SOCKETS_TO_SESSIONS = dict()
