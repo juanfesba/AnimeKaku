@@ -18,9 +18,11 @@ app.config.from_mapping(
 
 from . import home_page
 from . import sekai_and_category
+from . import lobby
 
 app.register_blueprint(home_page.bp)
 app.register_blueprint(sekai_and_category.bp)
+app.register_blueprint(lobby.bp)
 
 socketio = SocketIO(app, async_mode='eventlet')
 

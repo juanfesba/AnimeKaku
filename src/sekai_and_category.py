@@ -44,14 +44,15 @@ def lobbies(category_name=None):
             return "The data was corrupted :c. Please reload the page."
 
         room = room_logic.Room()
+        room_id = room.id
         room_nature = room_logic.RoomNature.CREATE_LOBBY
         room_conf = {'room_name' : input_lobby_name,
                      'category_name' : category_name,
                      'host_id' : g.player_id}
-        session["room_id"] = room.id
+        session["room_id"] = room_id
         _res, _error = room.setRoomNature(room_nature, room_conf)
 
-        return "Creating Lobby (?)"
+        return redirect(url_for('lobby.in_lobby', room_id=room_id))
 
     # GET
     response = make_response(render_template('category.html', player_name=g.player_name, category_name=category_name))
