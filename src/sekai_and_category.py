@@ -2,7 +2,7 @@ from flask import (Blueprint, g, make_response, redirect, render_template,
                    request, session, url_for)
 
 from src.business_logic import definitions
-from src.business_logic import room_logic
+from src.business_logic import lobby_logic
 from src.helpers import frontend
 from src.session_connection import authentication
 
@@ -43,14 +43,14 @@ def lobbies(category_name=None):
         if input_lobby_name == "" or len(input_lobby_name)>20:
             return "The data was corrupted :c. Please reload the page."
 
-        room = room_logic.Room()
-        room_id = room.id
-        room_nature = room_logic.RoomNature.CREATE_LOBBY
-        room_conf = {'room_name' : input_lobby_name,
+        lobby = lobby_logic.Lobby()
+        room_id = lobby.room_id
+        lobby_nature = lobby_logic.LobbyNature.CREATE_LOBBY
+        lobby_conf = {'lobby_name' : input_lobby_name,
                      'category_name' : category_name,
                      'host_id' : g.player_id}
         session["room_id"] = room_id
-        _res, _error = room.setRoomNature(room_nature, room_conf)
+        _res, _error = lobby.setLobbyNature(lobby_nature, lobby_conf)
 
         return redirect(url_for('lobby.in_lobby', room_id=room_id))
 

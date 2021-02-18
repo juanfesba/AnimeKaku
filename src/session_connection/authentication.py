@@ -23,5 +23,4 @@ def load_logged_in_user():
         g.room_id = None
 
 def generatePlayerID():
-    generated_id = str(uuid.uuid4())
-    return generated_id
+    return str(uuid.uuid4())
