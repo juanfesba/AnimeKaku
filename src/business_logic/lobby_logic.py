@@ -22,7 +22,7 @@ class LobbyNature(Enum):
     IN_GAME = 4
 
 '''
-lobby_conf
+### lobby_conf
 
 lobby_name
 category_name

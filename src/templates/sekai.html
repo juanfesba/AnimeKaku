@@ -67,7 +67,9 @@
                             <div class="card" style="width: 18rem;">
                                 <img src={{ url_for('static', filename=thumbnail) }} class="card-img-top" alt="...">
                                 <hr>
-                                <div class="card-body"><a href={{ go_to_category }} class="btn btn-danger">{{ category }}</a></div>
+                                <div class="card-body">
+                                    <a href={{ go_to_category }} class="btn btn-danger">{{ category }}</a>
+                                </div>
                             </div>
                         </center>
                     </div>

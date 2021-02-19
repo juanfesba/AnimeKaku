@@ -2,6 +2,7 @@ from flask import (Blueprint, g, make_response, redirect, render_template,
                    request, session, url_for)
 
 from src.business_logic import definitions
+from src.business_logic import global_state
 from src.business_logic import lobby_logic
 from src.helpers import frontend
 from src.session_connection import authentication
@@ -56,7 +57,11 @@ def lobbies(category_name=None):
         return redirect(url_for('lobby.in_lobby', room_id=room_id))
 
     # GET
-    response = make_response(render_template('category.html', player_name=g.player_name, category_name=category_name))
+    cat_lobbies = global_state.CAT_ROOM_IDS_TO_LOBBIES[category_name].values()
+    cat_lobbies = frontend.fixColumnCount(cat_lobbies, 4)
+    response = make_response(render_template('category.html', player_name=g.player_name,
+                                                              category_name=category_name,
+                                                              cat_lobbies=cat_lobbies))
     return response
 
     

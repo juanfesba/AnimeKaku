@@ -41,10 +41,39 @@
             </div>
 
             <hr>
-            <center>Or you can join an already created Lobby:</center>
+            <center>Or you can join an already created Lobby (refresh the page for updates):</center>
         
             <div id="Category_Lobbies" class="container">
                 
+                {% for row in cat_lobbies %}
+
+                <br>
+                <div class="row">
+                    
+                    {% for cat_lobby in row %}
+
+                    {% set go_to_lobby = '/lobby/' ~ cat_lobby.room_id %}
+
+                    <div class="col-sm">
+                        <center>
+                            <div class="card" style="width: 18rem;">
+                                <div class="card-header">
+                                    {{ cat_lobby.lobby_conf['lobby_name'] }}
+                                </div>
+                                <div class="card-body">
+                                    <a href={{ go_to_lobby }} class="btn btn-danger">Join!</a>
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+                <br>
+
+                {% endfor %}
+
             </div>
         
         </div>
