@@ -22,6 +22,7 @@ def home():
         session["player_name"] = input_player_name #TODO: Maybe move to authentication module when necessary.
         session["player_id"] = authentication.generatePlayerID()
         session["room_id"] = None
+        session["category_name"] = None
         return redirect(url_for('sekai.sekai'))
     #if request.method == "GET"
     response = make_response(render_template('home.html', name=None))
