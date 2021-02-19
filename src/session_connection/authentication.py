@@ -23,7 +23,7 @@ def load_logged_in_user():
     else:
         g.room_id = room_id
 
-    if room_id is None:
+    if category_name is None:
         g.category_name = None
     else:
         g.category_name = category_name

@@ -9,9 +9,9 @@ bp = Blueprint('home_page', __name__)
 @bp.before_request
 def beforeAppRequest():
     authentication.load_logged_in_user()
-    if g.player_name is None:
-        return
-    return redirect(url_for('sekai.sekai'))
+    if g.player_name is not None:
+        return redirect(url_for('sekai.sekai'))
+    return
 
 @bp.route("/", methods=("GET", "POST"))
 def home():
