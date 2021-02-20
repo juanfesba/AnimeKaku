@@ -52,7 +52,7 @@
                     
                     {% for cat_lobby in row %}
 
-                    {% set go_to_lobby = '/lobby/' ~ cat_lobby.room_id %}
+                    {% set go_to_lobby = '/lobby/inv/' ~ cat_lobby.lobby_conf['category_name'] ~ '/' ~ cat_lobby.room_id %}
 
                     <div class="col-sm">
                         <center>
