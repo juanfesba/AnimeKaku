@@ -6,7 +6,6 @@ def load_logged_in_user():
     player_name = session.get("player_name")
     player_id = session.get("player_id")
     room_id = session.get("room_id")
-    category_name = session.get("category_name")
 
     if player_name is None:
         g.player_name = None
@@ -22,11 +21,6 @@ def load_logged_in_user():
         g.room_id = None
     else:
         g.room_id = room_id
-
-    if category_name is None:
-        g.category_name = None
-    else:
-        g.category_name = category_name
 
 def generatePlayerID():
     return str(uuid.uuid4())

@@ -14,8 +14,6 @@ def beforeAppRequest():
     authentication.load_logged_in_user()
     if g.player_name is None:
         return redirect(url_for('home_page.home'))
-    if g.room_id is not None:
-        return redirect(url_for('lobby.in_lobby', room_id=g.room_id))
     return
 
 @bp.route("/", methods=("GET", "POST"))
@@ -52,8 +50,6 @@ def lobbies(category_name=None):
         lobby_conf = {'lobby_name' : input_lobby_name,
                      'category_name' : category_name,
                      'host_id' : g.player_id}
-        session['room_id'] = room_id
-        session['category_name'] = category_name
         _res, _error = lobby.setLobbyNature(lobby_nature, lobby_conf)
 
         return redirect(url_for('lobby.in_lobby', room_id=room_id))
