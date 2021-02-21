@@ -52,7 +52,7 @@ def lobbies(category_name=None):
                       'host_id' : g.player_id}
         _res, _error = lobby.setLobbyNature(lobby_nature, lobby_conf)
 
-        return redirect(url_for('lobby.inviteLobby', room_id=room_id, lobby_cat=category_name))
+        return redirect(url_for('lobby.inLobby', room_id=room_id))
 
     # GET
     cat_lobbies = global_state.CAT_ROOM_IDS_TO_LOBBIES[category_name].values()
