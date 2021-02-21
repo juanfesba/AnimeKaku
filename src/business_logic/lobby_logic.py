@@ -5,14 +5,13 @@ from src.business_logic import global_state
 from src.business_logic import lobby_logic
 from enum import Enum
 
-def destroyUnusedLobby(host_id):
-    room_id, category_name = global_state.SESSIONS_TO_CAT_ROOM_IDS[host_id]
+def destroyUnusedLobby(room_id, category_name):
     if category_name in global_state.CAT_ROOM_IDS_TO_LOBBIES:
         rooms_in_category = global_state.CAT_ROOM_IDS_TO_LOBBIES[category_name]
         if room_id in rooms_in_category:
             del rooms_in_category[room_id]
 
-    del global_state.SESSIONS_TO_CAT_ROOM_IDS[host_id] # destroy backwards if it is cancelled in the first del
+    # del global_state.SESSIONS_TO_CAT_ROOM_IDS[host_id]
 
 class LobbyNature(Enum):
     NONE = 0
@@ -44,13 +43,12 @@ class Lobby():
         res = None
         if lobby_nature == LobbyNature.CREATE_LOBBY:
             self.lobby_conf = lobby_conf
-            host_id = lobby_conf['host_id']
             category_name = lobby_conf['category_name']
 
-            global_state.SESSIONS_TO_CAT_ROOM_IDS[host_id] = (self.room_id, category_name)
+            # global_state.SESSIONS_TO_CAT_ROOM_IDS[host_id] = (self.room_id, category_name)
             global_state.CAT_ROOM_IDS_TO_LOBBIES[category_name][self.room_id] = self
 
-            garbage_collector = threading.Timer(15, destroyUnusedLobby, args=(host_id,))
+            garbage_collector = threading.Timer(15, destroyUnusedLobby, args=(self.room_id, category_name))
             self.lobby_conf['garbage_collector'] = garbage_collector
             garbage_collector.start()
         print('session : room_id #', global_state.SESSIONS_TO_CAT_ROOM_IDS)

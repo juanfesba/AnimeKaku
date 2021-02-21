@@ -50,7 +50,6 @@ def lobbies(category_name=None):
         lobby_conf = {'lobby_name' : input_lobby_name,
                      'category_name' : category_name,
                      'host_id' : g.player_id}
-        session['lobby_cat'] = category_name
         _res, _error = lobby.setLobbyNature(lobby_nature, lobby_conf)
 
         return redirect(url_for('lobby.inviteLobby', room_id=room_id, lobby_cat=category_name))
