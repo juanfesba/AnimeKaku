@@ -1,6 +1,8 @@
-from flask import Blueprint, g, redirect, session, url_for
+from flask import Blueprint, g, redirect, request, session, url_for
 
+from src.business_logic import definitions
 from src.business_logic import global_state
+from src.helpers import common_helpers
 from src.session_connection import authentication
 
 bp = Blueprint('lobby', __name__, url_prefix="/lobby")
@@ -14,8 +16,14 @@ def beforeAppRequest():
 
 @bp.route("/<room_id>", methods=("GET", "POST"))
 def inLobby(room_id=None):
-    '''if room_id not in cat_lobbies:
-        session["lobby_cat"] = None
-        return redirect(url_for('sekai.lobbies', category_name=g.lobby_cat)) # pending error (flash) message here'''
+    room = common_helpers.retrieveRoomFromID(room_id)
+
+    if room is None:
+        if 'return_to_cat' in request.args:
+            category_name = request.args['return_to_cat']
+            if category_name not in definitions.CATEGORY_NAMES:
+                return redirect(url_for('sekai.sekai'))
+            return redirect(url_for('sekai.lobbies', category_name=category_name))
+        return redirect(url_for('sekai.sekai')) #TODO: flash message missing. Also, maybe we can refactor this if it gets repeated.
     
     return room_id
