@@ -1,7 +1,9 @@
-from flask import Blueprint, g, redirect, request, session, url_for
+from flask import (Blueprint, g, make_response, redirect, render_template,
+                   request, session, url_for)
 
-from src.business_logic import definitions
-from src.business_logic import global_state
+from src.helpers import data_integrity
+
+from src.business_logic import definitions, global_state
 from src.helpers import common_helpers
 from src.session_connection import authentication
 
@@ -26,4 +28,12 @@ def inLobby(room_id=None):
             return redirect(url_for('sekai.lobbies', category_name=category_name))
         return redirect(url_for('sekai.sekai')) #TODO: flash message missing. Also, maybe we can refactor this if it gets repeated.
     
-    return room_id
+    lobby_conf = lobby.lobby_conf
+    if data_integrity.dictIsCorrupted(['category_name', 'lobby_name'], lobby_conf):
+        return "The data was corrupted :c. Please reload the page."
+    lobby_name = lobby_conf['lobby_name']
+    category_name = lobby_conf['category_name']
+    category = definitions.CATEGORIES[category_name]
+
+    response = make_response(render_template('lobby.html', player_name=g.player_name, category=category, lobby_name=lobby_name))
+    return response
