@@ -16,9 +16,9 @@ def beforeAppRequest():
 
 @bp.route("/<room_id>", methods=("GET", "POST"))
 def inLobby(room_id=None):
-    room = common_helpers.retrieveRoomFromID(room_id)
+    lobby = common_helpers.retrieveRoomFromID(room_id)
 
-    if room is None:
+    if lobby is None:
         if 'return_to_cat' in request.args:
             category_name = request.args['return_to_cat']
             if category_name not in definitions.CATEGORY_NAMES:
