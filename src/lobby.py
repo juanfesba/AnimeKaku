@@ -3,7 +3,7 @@ from flask import (Blueprint, g, make_response, redirect, render_template,
 
 from src.helpers import data_integrity
 
-from src.business_logic import definitions, global_state
+from src.business_logic import definitions, lobby_logic, global_state
 from src.helpers import common_helpers
 from src.session_connection import authentication
 
@@ -26,7 +26,7 @@ def inLobby(room_id=None):
             if category_name in definitions.CATEGORY_NAMES:
                 return redirect(url_for('sekai.lobbies', category_name=category_name))
         return redirect(url_for('sekai.sekai')) #TODO: flash message missing. Also, maybe we can refactor this if it gets repeated.
-    
+
     lobby_conf = lobby.lobby_conf
     if data_integrity.dictIsCorrupted(['category_name', 'lobby_name', 'host_id'], lobby_conf):
         return "The data was corrupted :c. Please reload the page."
@@ -37,10 +37,22 @@ def inLobby(room_id=None):
     is_host = False
     if host_id == g.player_id:
         is_host = True
-
-    category = definitions.CATEGORIES[category_name]
-    response = make_response(render_template('lobby.html', player_name=g.player_name,
-                                                           category=category,
-                                                           lobby_name=lobby_name,
-                                                           is_host=is_host))
+            
+    if lobby.lobby_nature == lobby_logic.LobbyNature.CREATE_LOBBY:
+        if not is_host:
+            if 'return_to_cat' in request.args:
+                category_name = request.args['return_to_cat']
+                if category_name in definitions.CATEGORY_NAMES:
+                    return redirect(url_for('sekai.lobbies', category_name=category_name))
+            return redirect(url_for('sekai.sekai')) #TODO: flash message missing. Also, maybe we can refactor this if it gets repeated.
+        
+        category = definitions.CATEGORIES[category_name]
+        response = make_response(render_template('lobby.html', player_name=g.player_name,
+                                                            category_name=category_name,
+                                                            category=category,
+                                                            lobby_name=lobby_name,
+                                                            is_host=is_host))
+        return response
+    
+    response = 'pending :P'
     return response

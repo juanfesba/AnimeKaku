@@ -42,6 +42,7 @@ class Lobby():
         error = False
         res = None
         if lobby_nature == LobbyNature.CREATE_LOBBY:
+            self.lobby_nature = LobbyNature.CREATE_LOBBY
             self.lobby_conf = lobby_conf
             category_name = lobby_conf['category_name']
 

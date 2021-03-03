@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>{{ category.name }}</title>
+        <title>{{ category_name }}</title>
         <!--
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
         -->
@@ -24,7 +24,7 @@
                         <center>
                             <b><label for="basic-url" style="font-size:18">Player Name:&nbsp</label><label id="login_user_name_on_top" for="basic-url" style="font-size:18;color:red"> {{ player_name }} </label></b>
                             <b><label for="basic-url" style="font-size:18">&nbspLobby Name:&nbsp</label><label id="category_category_on_top" for="basic-url" style="font-size:18;color:red"> {{ lobby_name }} </label></b>
-                            <b><label for="basic-url" style="font-size:18">&nbspSekai:&nbsp</label><label id="category_category_on_top" for="basic-url" style="font-size:18;color:red"> {{ category.name }} </label></b>
+                            <b><label for="basic-url" style="font-size:18">&nbspSekai:&nbsp</label><label id="category_category_on_top" for="basic-url" style="font-size:18;color:red"> {{ category_name }} </label></b>
                         </center>
                     </div>
                 </div>
