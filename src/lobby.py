@@ -48,10 +48,10 @@ def inLobby(room_id=None):
         
         category = definitions.CATEGORIES[category_name]
         response = make_response(render_template('lobby.html', player_name=g.player_name,
-                                                            category_name=category_name,
-                                                            category=category,
-                                                            lobby_name=lobby_name,
-                                                            is_host=is_host))
+                                                               category_name=category_name,
+                                                               category=category,
+                                                               lobby_name=lobby_name,
+                                                               is_host=is_host))
         return response
     
     response = 'pending :P'
