@@ -25,6 +25,7 @@ def beforeAppRequest():
 
 @bp.route("/<room_id>", methods=("GET", "POST"))
 def inLobby(room_id=None):
+    # TODO: Check that the user isn't already in another room.
     lobby = common_helpers.retrieveRoomFromID(room_id)
 
     if lobby is None: return returnToCat(request.args)
