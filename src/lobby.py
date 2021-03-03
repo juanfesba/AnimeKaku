@@ -23,17 +23,24 @@ def inLobby(room_id=None):
     if lobby is None:
         if 'return_to_cat' in request.args:
             category_name = request.args['return_to_cat']
-            if category_name not in definitions.CATEGORY_NAMES:
-                return redirect(url_for('sekai.sekai'))
-            return redirect(url_for('sekai.lobbies', category_name=category_name))
+            if category_name in definitions.CATEGORY_NAMES:
+                return redirect(url_for('sekai.lobbies', category_name=category_name))
         return redirect(url_for('sekai.sekai')) #TODO: flash message missing. Also, maybe we can refactor this if it gets repeated.
     
     lobby_conf = lobby.lobby_conf
-    if data_integrity.dictIsCorrupted(['category_name', 'lobby_name'], lobby_conf):
+    if data_integrity.dictIsCorrupted(['category_name', 'lobby_name', 'host_id'], lobby_conf):
         return "The data was corrupted :c. Please reload the page."
-    lobby_name = lobby_conf['lobby_name']
     category_name = lobby_conf['category_name']
-    category = definitions.CATEGORIES[category_name]
+    host_id = lobby_conf['host_id']
+    lobby_name = lobby_conf['lobby_name']
 
-    response = make_response(render_template('lobby.html', player_name=g.player_name, category=category, lobby_name=lobby_name))
+    is_host = False
+    if host_id == g.player_id:
+        is_host = True
+
+    category = definitions.CATEGORIES[category_name]
+    response = make_response(render_template('lobby.html', player_name=g.player_name,
+                                                           category=category,
+                                                           lobby_name=lobby_name,
+                                                           is_host=is_host))
     return response
