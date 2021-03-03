@@ -9,6 +9,13 @@ from src.session_connection import authentication
 
 bp = Blueprint('lobby', __name__, url_prefix="/lobby")
 
+def returnToCat(request_args):
+    if 'return_to_cat' in request_args:
+        category_name = request_args['return_to_cat']
+        if category_name in definitions.CATEGORY_NAMES:
+            return redirect(url_for('sekai.lobbies', category_name=category_name))
+    return redirect(url_for('sekai.sekai')) #TODO: flash message missing.
+
 @bp.before_request
 def beforeAppRequest():
     authentication.load_logged_in_user()
@@ -20,12 +27,7 @@ def beforeAppRequest():
 def inLobby(room_id=None):
     lobby = common_helpers.retrieveRoomFromID(room_id)
 
-    if lobby is None:
-        if 'return_to_cat' in request.args:
-            category_name = request.args['return_to_cat']
-            if category_name in definitions.CATEGORY_NAMES:
-                return redirect(url_for('sekai.lobbies', category_name=category_name))
-        return redirect(url_for('sekai.sekai')) #TODO: flash message missing. Also, maybe we can refactor this if it gets repeated.
+    if lobby is None: return returnToCat(request.args)
 
     lobby_conf = lobby.lobby_conf
     if data_integrity.dictIsCorrupted(['category_name', 'lobby_name', 'host_id'], lobby_conf):
@@ -39,13 +41,8 @@ def inLobby(room_id=None):
         is_host = True
             
     if lobby.lobby_nature == lobby_logic.LobbyNature.CREATE_LOBBY:
-        if not is_host:
-            if 'return_to_cat' in request.args:
-                category_name = request.args['return_to_cat']
-                if category_name in definitions.CATEGORY_NAMES:
-                    return redirect(url_for('sekai.lobbies', category_name=category_name))
-            return redirect(url_for('sekai.sekai')) #TODO: flash message missing. Also, maybe we can refactor this if it gets repeated.
-        
+        if not is_host: return returnToCat(request.args)
+
         category = definitions.CATEGORIES[category_name]
         response = make_response(render_template('lobby.html', player_name=g.player_name,
                                                                category_name=category_name,
