@@ -56,106 +56,103 @@
                 
                 <br>
                 <div class="container">
-        
-                    <form method="post">
 
-                        <button onclick="displayLobbySettingsForm('none')" type="button" class="close" aria-label="Close" style="color:red">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+                    <button onclick="displayLobbySettingsForm('none')" type="button" class="close" aria-label="Close" style="color:red">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
 
-                        <b>LOBBY <span style="color:red">SETTINGS</span></b>
-                        <br><br>
+                    <b>LOBBY <span style="color:red">SETTINGS</span></b>
+                    <br><br>
 
-                        <div class="row">
-                            <div class="col-md"></div>
-                            
+                    <div class="row">
+                        <div class="col-md"></div>
+                        
+                        <center>
+                        <div class="col-md">
+                            <div class="input-group mb-3">
+                                <label class="input-group-text" for="input_choose_topic">Topic:</label>
+                                <select onchange="displayFilterOnTopicSelect()" class="form-select" id="input_choose_topic" name="input_choose_topic">
+                                    {% for topic in category.topics %}
+                                        <option value={{ topic.name }}>&nbsp{{ topic.name }}&nbsp</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        </center>
+
+                        <div class="col-md"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+
+                        <div class="col-md">
                             <center>
-                            <div class="col-md">
-                                <div class="input-group mb-3">
-                                    <label class="input-group-text" for="input_choose_topic">Topic:</label>
-                                    <select onchange="displayFilterOnTopicSelect()" class="form-select" id="input_choose_topic" name="input_choose_topic">
-                                        {% for topic in category.topics %}
-                                            <option value={{ topic.name }}>&nbsp{{ topic.name }}&nbsp</option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                            </div>
+                                <b>Settings:</b>
                             </center>
-
-                            <div class="col-md"></div>
                         </div>
+                        <div class="col-md"></div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md"></div>
-
-                            <div class="col-md">
-                                <center>
-                                    <b>Settings:</b>
-                                </center>
+                    <div class="row">
+                        <div class="col-md"></div>
+                        
+                        <center>
+                        <div class="col-md">
+                            <u>Difficulty:</u>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="difficulty_checkbox" id="difficultyCheckBox1" value="Casual" checked>
+                                <label class="form-check-label" for="difficultyCheckBox1">
+                                    Casual (Recommended)
+                                </label>
                             </div>
-                            <div class="col-md"></div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="difficulty_checkbox" id="difficultyCheckBox2" value="Extreme">
+                                <label class="form-check-label" for="difficultyCheckBox2">
+                                    Extreme
+                                </label>
+                            </div>
                         </div>
+                        </center>
 
-                        <div class="row">
-                            <div class="col-md"></div>
-                            
+                        <div class="col-md"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+
+                        <div class="col-md">
                             <center>
-                            <div class="col-md">
-                                <u>Difficulty:</u>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="difficulty_checkbox" id="difficultyCheckBox1" value="Casual" checked>
-                                    <label class="form-check-label" for="difficultyCheckBox1">
-                                        Casual (Recommended)
-                                    </label>
-                                </div>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="difficulty_checkbox" id="difficultyCheckBox2" value="Extreme">
-                                    <label class="form-check-label" for="difficultyCheckBox2">
-                                        Extreme
-                                    </label>
-                                </div>
-                            </div>
+                                <br>
+                                <b>Filters:</b>
                             </center>
-
-                            <div class="col-md"></div>
                         </div>
+                        <div class="col-md"></div>
+                    </div>
 
-                        <div class="row">
-                            <div class="col-md"></div>
+                    <!--TODO: Here should be the 'if' to check if there is any Filter. -->
 
-                            <div class="col-md">
-                                <center>
-                                    <br>
-                                    <b>Filters:</b>
-                                </center>
-                            </div>
-                            <div class="col-md"></div>
-                        </div>
+                    {% for topic in category.topics %}
+                        {% for filter in topic.filters %}
+                            <div class={{ topic.name ~ '_filter row' }} style="display:none">
 
-                        <!--TODO: Here should be the 'if' to check if there is any Filter. -->
+                                    <div class="col-md"></div>
 
-                        {% for topic in category.topics %}
-                            {% for filter in topic.filters %}
-                                <div class={{ topic.name ~ '_filter row' }} style="display:none">
-
-                                        <div class="col-md"></div>
-
-                                        <center>
-                                        <div class="col-md">
-                                            <u>{{ filter.attribute }}</u>
-                                            <div class="form-check form-check-inline">
-                                                <input class="form-check-input" type="checkbox" name={{ filter.attribute ~ '_' ~ topic.name ~ '_filter' }} value={{ filter.attribute }} checked>
-                                                <label class="form-check-label" for={{ filter.attribute ~ '_filter' }}></label>
-                                            </div>
+                                    <center>
+                                    <div class="col-md">
+                                        <u>{{ filter.attribute }}</u>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name={{ filter.attribute ~ '_' ~ topic.name ~ '_filter' }} value={{ filter.attribute }} checked>
+                                            <label class="form-check-label" for={{ filter.attribute ~ '_filter' }}></label>
                                         </div>
-                                        </center>
+                                    </div>
+                                    </center>
 
-                                        <div class="col-md"></div>
-                                    
-                                </div>
-                            {% endfor %}
+                                    <div class="col-md"></div>
+                                
+                            </div>
                         {% endfor %}
-                    </form>
+                    {% endfor %}
 
                 </div>
                 <br>
@@ -164,7 +161,7 @@
             </center>
 
             <hr>
-            <div id="Category_Lobbies" class="container">
+            <div id="Players and Chat" class="container">
                 
             </div>
         
