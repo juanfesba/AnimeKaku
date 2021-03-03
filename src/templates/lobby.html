@@ -168,14 +168,18 @@
         </div>
     </body>
 
+    <script>
+
+        var displayLobbySettingsForm = function(displayValue){
+            var htmlLobbySettingsForm = document.getElementById('lobby_settings_form');
+            htmlLobbySettingsForm.style.display = displayValue;
+        }
+        
+    </script>
+
     {% if is_host %}
 
         <script>
-
-            var displayLobbySettingsForm = function(displayValue){
-                var htmlLobbySettingsForm = document.getElementById('lobby_settings_form');
-                htmlLobbySettingsForm.style.display = displayValue;
-            }
 
             
             var lastTopicSelected = "";
@@ -206,11 +210,6 @@
     {% else %}
 
         <script>
-
-            var displayLobbySettingsForm = function(displayValue){
-                var htmlLobbySettingsForm = document.getElementById('lobby_settings_form');
-                htmlLobbySettingsForm.style.display = displayValue;
-            }
             
         </script>
 
