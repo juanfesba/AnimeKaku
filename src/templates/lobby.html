@@ -43,7 +43,7 @@
                     </div>
                     <div class="col-sm">
                         <center>
-                            <button type="button" onclick="displayCreateLobbyForm('block')" class="btn btn-danger">Settings</button>
+                            <button type="button" onclick="displayLobbySettingsForm('block')" class="btn btn-danger">Settings</button>
                         </center>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
         
                     <form method="post">
 
-                        <button onclick="displayCreateLobbyForm('none')" type="button" class="close" aria-label="Close" style="color:red">
+                        <button onclick="displayLobbySettingsForm('none')" type="button" class="close" aria-label="Close" style="color:red">
                             <span aria-hidden="true">&times;</span>
                         </button>
 
@@ -173,9 +173,9 @@
 
     <script>
 
-        var displayCreateLobbyForm = function(displayValue){
-            var htmlCreateLobbyForm = document.getElementById('lobby_settings_form');
-            htmlCreateLobbyForm.style.display = displayValue;
+        var displayLobbySettingsForm = function(displayValue){
+            var htmlLobbySettingsForm = document.getElementById('lobby_settings_form');
+            htmlLobbySettingsForm.style.display = displayValue;
         }
 
         var lastTopicSelected = "";
