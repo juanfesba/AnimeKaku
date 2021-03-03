@@ -168,34 +168,52 @@
         </div>
     </body>
 
-    <script>
+    {% if is_host %}
 
-        var displayLobbySettingsForm = function(displayValue){
-            var htmlLobbySettingsForm = document.getElementById('lobby_settings_form');
-            htmlLobbySettingsForm.style.display = displayValue;
-        }
+        <script>
 
-        var lastTopicSelected = "";
+            var displayLobbySettingsForm = function(displayValue){
+                var htmlLobbySettingsForm = document.getElementById('lobby_settings_form');
+                htmlLobbySettingsForm.style.display = displayValue;
+            }
 
-        var displayElementByClass = function(className, displayValue){
-            var htmlElementsByClass = document.getElementsByClassName(className);
-            if (htmlElementsByClass.length>0 && htmlElementsByClass[0] != undefined){
-                for (i = 0; i < htmlElementsByClass.length; i++) {
-                    htmlElementsByClass[i].style.display = displayValue;
+            
+            var lastTopicSelected = "";
+
+            var displayElementByClass = function(className, displayValue){
+                var htmlElementsByClass = document.getElementsByClassName(className);
+                if (htmlElementsByClass.length>0 && htmlElementsByClass[0] != undefined){
+                    for (i = 0; i < htmlElementsByClass.length; i++) {
+                        htmlElementsByClass[i].style.display = displayValue;
+                    }
                 }
             }
-        }
 
-        var displayFilterOnTopicSelect = function () {
-            if(lastTopicSelected != ""){
-                displayElementByClass(lastTopicSelected + '_filter', 'none');
+            var displayFilterOnTopicSelect = function () {
+                if(lastTopicSelected != ""){
+                    displayElementByClass(lastTopicSelected + '_filter', 'none');
+                }
+
+                var topicSelected = document.getElementById("input_choose_topic").value;
+                displayElementByClass(topicSelected + '_filter', 'block');
+                lastTopicSelected = topicSelected;
             }
 
-            var topicSelected = document.getElementById("input_choose_topic").value;
-            displayElementByClass(topicSelected + '_filter', 'block');
-            lastTopicSelected = topicSelected;
-        }
+            displayFilterOnTopicSelect();
 
-        displayFilterOnTopicSelect();
-    </script>
+        </script>
+
+    {% else %}
+
+        <script>
+
+            var displayLobbySettingsForm = function(displayValue){
+                var htmlLobbySettingsForm = document.getElementById('lobby_settings_form');
+                htmlLobbySettingsForm.style.display = displayValue;
+            }
+            
+        </script>
+
+    {% endif %}
+
 </html>
