@@ -11,7 +11,20 @@
     </head>
 
     <body>
-        <div id="Lobby_Page">
+        <div id="Loading_Screen">
+
+            <div style="left:50%; top:50%; position:absolute; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+                <b>ATTEMPTING TO <span style="color:red">CONNECT</span></b><br>
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                <div class="spinner-border text-danger" role="status">
+                    <span class="sr-only">Trying to connect...</span>
+                </div>
+                &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+            </div>
+
+        </div>
+
+        <div id="Lobby_Page" style="display: none;">
             <br>
             <center>
                 <img src={{ url_for('static', filename='logo_anime_kaku.png') }} alt="Anime Kaku Logo">
