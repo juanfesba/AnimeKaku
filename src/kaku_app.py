@@ -26,15 +26,14 @@ app.register_blueprint(lobby.bp)
 
 socketio = SocketIO(app, async_mode='eventlet')
 
+'''
 @socketio.on('connect')
 def handle_message(data=None):
-    print('connected')
     print(request.sid)
     print(session.get('player_name'))
+'''
 
-@socketio.event
-def sayHi(data=None):
-    print(data['one'])
+from src.business_logic import lobby_socket
 
 if __name__ == '__main__':
     socketio.run(app)
