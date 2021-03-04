@@ -29,6 +29,7 @@ socketio = SocketIO(app, async_mode='eventlet')
 '''
 @socketio.on('disconnect')
 def handle_message(data=None):
+    print('# disconnected!')
     print(request.sid)
     print(session.get('player_name'))
 '''
