@@ -27,7 +27,7 @@ app.register_blueprint(lobby.bp)
 socketio = SocketIO(app, async_mode='eventlet')
 
 '''
-@socketio.on('connect')
+@socketio.on('disconnect')
 def handle_message(data=None):
     print(request.sid)
     print(session.get('player_name'))
