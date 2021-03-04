@@ -16,7 +16,7 @@ def redirectOut(error_message):
 def beforeAppRequest():
     authentication.load_logged_in_user()
     if g.player_name is None:
-        return redirectOut("Credentials lost in the internet.")
+        return "Credentials lost in the internet."
     return
 
 @socketio.event
