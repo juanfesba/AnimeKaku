@@ -52,6 +52,8 @@
                     
                     {% for cat_lobby in row %}
 
+                    {% if cat_lobby.lobby_nature == in_lobby_nature %}
+
                     {% set go_to_lobby = '/lobby/' ~ cat_lobby.room_id ~ '?return_to_cat=' ~ category_name %}
 
                     <div class="col-sm">
@@ -66,6 +68,8 @@
                             </div>
                         </center>
                     </div>
+
+                    {% endif %}
 
                     {% endfor %}
 

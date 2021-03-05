@@ -59,7 +59,8 @@ def lobbies(category_name=None):
     cat_lobbies = frontend.fixColumnCount(cat_lobbies, 4)
     response = make_response(render_template('category.html', player_name=g.player_name,
                                                               category_name=category_name,
-                                                              cat_lobbies=cat_lobbies))
+                                                              cat_lobbies=cat_lobbies,
+                                                              in_lobby_nature=lobby_logic.LobbyNature.IN_LOBBY))
     return response
 
     

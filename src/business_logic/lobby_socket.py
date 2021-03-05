@@ -83,6 +83,7 @@ def connectToLobby(data=None):
 
         
         # change lobby nature - join room
+        # lobby.lobby_nature = lobby_logic.LobbyNature.IN_LOBBY
 
     print("### in lobby_socket.py ###")
     print('player_sid : room_id #', global_state.SOCKETS_TO_SESSIONS)
