@@ -1,10 +1,8 @@
 from flask import g, redirect, request, url_for
-
 from flask_socketio import emit
-
 from src import kaku_app
-
 from src.business_logic import global_state
+from src.helpers import common_helpers
 from src.session_connection import authentication
 
 socketio = kaku_app.socketio
@@ -24,12 +22,18 @@ def connectToLobby(data=None):
     if 'room_id' not in data:
         err = "Something happened with your data."
     err = beforeAppRequest()
-    if err is not None: # TODO: flash error
-        redirectOut(err)
-        return
 
     player_sid = request.sid
     room_id = data.get('room_id')
+
+    lobby = common_helpers.retrieveRoomFromID(room_id)
+
+    if lobby is None:
+        err = "Lobby not found in the internet."
+
+    if err is not None: # TODO: flash error
+        redirectOut(err)
+        return
 
     player_id = g.player_id
 
