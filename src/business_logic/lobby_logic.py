@@ -23,6 +23,8 @@ class LobbyNature(Enum):
 '''
 ### lobby_conf
 
+# General (CREATE_LOBBY)
+
 lobby_name
 category_name
 host_id
