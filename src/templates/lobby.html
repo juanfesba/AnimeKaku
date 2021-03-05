@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title id='category_name'>{{ category_name }}</title>
+        <title>{{ category_name }}</title>
         <!--
             <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='site.css')}}" />
         -->
@@ -11,6 +11,9 @@
     </head>
 
     <body>
+        <div id='category_name' style="display: none;">{{ category_name }}</div>
+        <div id='room_id' style="display: none;">{{ room_id }}</div>
+
         <div id="Loading_Screen">
 
             <div style="left:50%; top:50%; position:absolute; -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
@@ -186,7 +189,9 @@
     <script>
         var socket = io();
         socket.on('connect', function() {
-            socket.emit('connectToLobby', {});
+            socket.emit('connectToLobby', {
+                room_id : document.getElementById('room_id').innerText,
+            });
         });
 
         socket.on('Redirect Out', function() {

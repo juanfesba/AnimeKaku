@@ -21,11 +21,15 @@ def beforeAppRequest():
 
 @socketio.event
 def connectToLobby(data=None):
-    player_sid = request.sid
+    if 'room_id' not in data:
+        err = "Something happened with your data."
     err = beforeAppRequest()
     if err is not None: # TODO: flash error
         redirectOut(err)
         return
+
+    player_sid = request.sid
+    room_id = data.get('room_id')
 
     player_id = g.player_id
 
