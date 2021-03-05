@@ -82,7 +82,7 @@ def connectToLobby(data=None):
             return
 
         
-        # change lobby nature
+        # change lobby nature - join room
 
     print("### in lobby_socket.py ###")
     print('player_sid : room_id #', global_state.SOCKETS_TO_SESSIONS)
