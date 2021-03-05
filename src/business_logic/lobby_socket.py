@@ -1,10 +1,11 @@
+import logging
+import time
+
 from flask import g, redirect, request, url_for
 from flask_socketio import emit
 from src import kaku_app
-from src.business_logic import global_state
-from src.business_logic import lobby_logic
-from src.helpers import common_helpers
-from src.helpers import data_integrity
+from src.business_logic import global_state, lobby_logic
+from src.helpers import common_helpers, data_integrity
 from src.session_connection import authentication
 
 socketio = kaku_app.socketio
@@ -64,7 +65,23 @@ def connectToLobby(data=None):
         global_state.SOCKETS_TO_SESSIONS[player_sid] = player_id
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name)
 
+        time.sleep(1.4)
+        if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS or 'garbage_collector' not in lobby_conf:
+            del global_state.SOCKETS_TO_SESSIONS[player_sid]
+            redirectOut("Looks like the internet is not waiting for us.")
+            return
 
+        garbage_collector = lobby_conf['garbage_collector']
+        garbage_collector.cancel()
+        time.sleep(0.3)
+
+        if garbage_collector.is_alive() or common_helpers.retrieveRoomFromID(room_id) is None:
+            del global_state.SOCKETS_TO_SESSIONS[player_sid]
+            del global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
+            redirectOut("Looks like the internet is not waiting for us.")
+            return
+
+        
         # change lobby nature
 
     print("### in lobby_socket.py ###")
