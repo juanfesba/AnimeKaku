@@ -52,6 +52,8 @@ class Lobby():
             garbage_collector = threading.Timer(15, destroyUnusedLobby, args=(self.room_id, category_name))
             self.lobby_conf['garbage_collector'] = garbage_collector
             garbage_collector.start()
+
+        print("### in lobby_socket.py ###")
         print('session : room_id #', global_state.SESSIONS_TO_CAT_ROOM_IDS)
         print('cat_room_id : lobby #', global_state.CAT_ROOM_IDS_TO_LOBBIES)
 
