@@ -19,6 +19,7 @@ def beforeAppRequest():
 
 @socketio.event
 def connectToLobby(data=None):
+    err = None
     if 'room_id' not in data:
         err = "Something happened with your data."
     err = beforeAppRequest()
