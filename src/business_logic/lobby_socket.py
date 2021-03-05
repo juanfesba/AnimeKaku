@@ -38,6 +38,7 @@ def connectToLobby(data=None):
 
     player_id = g.player_id
 
+    # Here comes the synchro critical section.
     if player_id in global_state.SESSIONS_TO_CAT_ROOM_IDS:
         redirectOut("You are already in a lobby/game.")
         return
