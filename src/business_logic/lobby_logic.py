@@ -53,7 +53,7 @@ player_sid
 
 @ game_settings
 
-type
+type (!)
 topic
 difficulty
 filters
