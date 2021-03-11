@@ -108,12 +108,7 @@ class Lobby():
                              'topic':topic.name,
                              'filters':filters}
             self.lobby_conf['game_settings'] = game_settings
-
-            print('#####')
-            print(self.lobby_conf['players'])
-            print(self.lobby_conf['game_settings'])
-
-            #pending join room (?) #####################################
+            
             self.lobby_nature = LobbyNature.IN_LOBBY
 
         print("### in lobby_logic.py ###")

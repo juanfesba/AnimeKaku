@@ -2,7 +2,7 @@ import logging
 import time
 
 from flask import g, redirect, request, url_for
-from flask_socketio import emit
+from flask_socketio import emit, join_room
 from src import kaku_app
 from src.business_logic import global_state, lobby_logic
 from src.helpers import common_helpers, data_integrity
@@ -85,6 +85,7 @@ def connectToLobby(data=None):
 
         lobby_params = {'player_sid' : player_sid}
 
+        join_room(room_id)
         _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
         # change lobby nature - join room
         # lobby.lobby_nature = lobby_logic.LobbyNature.IN_LOBBY
