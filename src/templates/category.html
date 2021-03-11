@@ -60,9 +60,11 @@
                         <center>
                             <div class="card" style="width: 18rem;">
                                 <div class="card-header">
-                                    {{ cat_lobby.lobby_conf['lobby_name'] }}
+                                    <b>{{ cat_lobby.lobby_conf['lobby_name'] }}</b>
                                 </div>
                                 <div class="card-body">
+                                    <b>Host: </b>{{ cat_lobby.lobby_conf['host_name'] }}
+                                    <br>
                                     <a href={{ go_to_lobby }} class="btn btn-danger">Join!</a>
                                 </div>
                             </div>
