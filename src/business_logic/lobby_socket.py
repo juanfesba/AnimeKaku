@@ -82,6 +82,12 @@ def connectToLobby(data=None):
             return
 
         del lobby_conf['garbage_collector']
+
+        lobby_params = {'is_private' : False,
+                        'lobby_password' : None,
+                        'host_sid' : player_sid}
+
+        _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
         # change lobby nature - join room
         # lobby.lobby_nature = lobby_logic.LobbyNature.IN_LOBBY
 
