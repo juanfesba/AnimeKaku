@@ -2,7 +2,6 @@ import threading
 import uuid
 
 from src.business_logic import global_state
-from src.business_logic import lobby_logic
 from enum import Enum
 
 def destroyUnusedLobby(room_id, category_name):
@@ -42,8 +41,6 @@ garbage_collector
 critical_synchro
 is_private
 password
-player_amount
-player_cap (?)
 
 @ players - key = pos
 
@@ -53,7 +50,7 @@ player_sid
 
 @ game_settings
 
-type (!)
+type
 topic
 difficulty
 filters
