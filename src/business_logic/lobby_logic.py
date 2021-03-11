@@ -20,16 +20,43 @@ class LobbyNature(Enum):
     IN_LOBBY = 3
     IN_GAME = 4
 
-'''
-### lobby_conf
+class LobbySynchro(Enum):
+    NONE = 0
+    STARTING_LOBBY = 1
+    JOINING_LOBBY = 2
+    LEAVING_LOBBY = 3
 
-# General (CREATE_LOBBY)
+'''
+### lobby_conf ###
+
+# General (CREATE_LOBBY) #
 
 lobby_name
 category_name
 host_id
 
 garbage_collector
+
+# In lobby (IN_LOBBY) #
+
+critical_synchro
+is_private
+password
+player_amount
+player_cap (?)
+
+@ players - key = pos
+
+player_id
+player_name
+player_sid
+
+@ game_settings
+
+type
+topic
+difficulty
+filters
 
 '''
 
