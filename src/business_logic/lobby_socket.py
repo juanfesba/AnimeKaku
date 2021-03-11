@@ -81,7 +81,7 @@ def connectToLobby(data=None):
             redirectOut("Looks like the internet is not waiting for us.")
             return
 
-        
+        del lobby_conf['garbage_collector']
         # change lobby nature - join room
         # lobby.lobby_nature = lobby_logic.LobbyNature.IN_LOBBY
 
