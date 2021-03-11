@@ -1,6 +1,8 @@
 import threading
 import uuid
 
+from src.business_logic import definitions
+from src.business_logic import game_logic
 from src.business_logic import global_state
 from enum import Enum
 
@@ -24,6 +26,11 @@ class LobbySynchro(Enum):
     STARTING_LOBBY = 1
     JOINING_LOBBY = 2
     LEAVING_LOBBY = 3
+
+class LobbyDifficulty(Enum):
+    NONE = 0
+    CASUAL = 1
+    EXTREME = 2
 
 '''
 ### lobby_conf ###
@@ -52,9 +59,9 @@ player_sid
 
 @ game_settings
 
-type
-topic
+game_type
 difficulty
+topic
 filters
 
 '''
@@ -82,9 +89,31 @@ class Lobby():
             self.lobby_conf['lobby_synchro'] = LobbySynchro.NONE
             garbage_collector.start()
         elif lobby_nature == LobbyNature.IN_LOBBY:
-            
+            self.lobby_conf['host_sid'] = lobby_params['player_sid']
 
-            #pending join room (?)
+            host_player = dict()
+            host_player['player_id'] = self.lobby_conf['host_id']
+            host_player['player_name'] = self.lobby_conf['host_name']
+            host_player['player_sid'] = self.lobby_conf['host_sid']
+            players_conf = {0:host_player}
+            self.lobby_conf['players'] = players_conf
+
+            category_name = self.lobby_conf['category_name']
+            # It shouldn't be necessary to check if the category_name is correct. ######################################
+            category = definitions.CATEGORIES[category_name]
+            topic = category.topics[0]
+            filters = topic.filters
+            game_settings = {'game_type':game_logic.GameType.CLASSIC,
+                             'difficulty':LobbyDifficulty.CASUAL,
+                             'topic':topic.name,
+                             'filters':filters}
+            self.lobby_conf['game_settings'] = game_settings
+
+            print('#####')
+            print(self.lobby_conf['players'])
+            print(self.lobby_conf['game_settings'])
+
+            #pending join room (?) #####################################
             self.lobby_nature = LobbyNature.IN_LOBBY
 
         print("### in lobby_logic.py ###")
