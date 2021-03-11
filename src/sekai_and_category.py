@@ -49,7 +49,10 @@ def lobbies(category_name=None):
         lobby_nature = lobby_logic.LobbyNature.CREATE_LOBBY
         lobby_params = {'lobby_name' : input_lobby_name,
                       'category_name' : category_name,
-                      'host_id' : g.player_id}
+                      'host_id' : g.player_id,
+                      'host_name' : g.player_name,
+                      'is_private' : False,
+                      'lobby_password' : None}
         _res, _error = lobby.setLobbyNature(lobby_nature, lobby_params)
 
         return redirect(url_for('lobby.inLobby', room_id=room_id))

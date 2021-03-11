@@ -33,14 +33,16 @@ class LobbySynchro(Enum):
 lobby_name
 category_name
 host_id
+host_name
+is_private
+lobby_password - not atm
 
+lobby_synchro
 garbage_collector
 
 # In lobby (IN_LOBBY) #
 
-critical_synchro
-is_private
-lobby_password
+host_sid
 
 @ players - key = pos
 
@@ -77,8 +79,12 @@ class Lobby():
 
             garbage_collector = threading.Timer(15, destroyUnusedLobby, args=(self.room_id, category_name))
             self.lobby_conf['garbage_collector'] = garbage_collector
+            self.lobby_conf['lobby_synchro'] = LobbySynchro.NONE
             garbage_collector.start()
         elif lobby_nature == LobbyNature.IN_LOBBY:
+            
+
+            #pending join room (?)
             self.lobby_nature = LobbyNature.IN_LOBBY
 
         print("### in lobby_logic.py ###")
