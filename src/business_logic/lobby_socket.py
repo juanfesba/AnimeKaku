@@ -87,8 +87,8 @@ def connectToLobby(data=None):
 
         join_room(room_id)
         _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
-        # change lobby nature - join room
-        # lobby.lobby_nature = lobby_logic.LobbyNature.IN_LOBBY
+        
+        emit('Successful Connection')
 
     print("### in lobby_socket.py ###")
     print('player_sid : room_id #', global_state.SOCKETS_TO_SESSIONS)

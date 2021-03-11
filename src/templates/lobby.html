@@ -197,6 +197,11 @@
         socket.on('Redirect Out', function() {
             window.location.href = "/sekai/" + document.getElementById('category_name').innerText;
         });
+
+        socket.on('Successful Connection', function() {
+            document.getElementById('Loading_Screen').style.display = 'none';
+            document.getElementById('Lobby_Page').style.display = 'block';
+        });
     </script>
 
     <script>
