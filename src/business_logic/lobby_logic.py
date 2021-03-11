@@ -99,7 +99,7 @@ class Lobby():
             self.lobby_conf['players'] = players_conf
 
             category_name = self.lobby_conf['category_name']
-            # It shouldn't be necessary to check if the category_name is correct. ######################################
+            # It shouldn't be necessary to check if the category_name is correct.
             category = definitions.CATEGORIES[category_name]
             topic = category.topics[0]
             filters = topic.filters
