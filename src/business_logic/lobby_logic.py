@@ -74,7 +74,7 @@ class Lobby():
         self.lobby_conf = dict()
 
     def setLobbyNature(self, lobby_nature, lobby_params):
-        error = False
+        error = None
         res = None
         if lobby_nature == LobbyNature.CREATE_LOBBY:
             self.lobby_nature = LobbyNature.CREATE_LOBBY
