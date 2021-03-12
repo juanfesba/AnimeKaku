@@ -154,8 +154,6 @@ def connectToLobby(data=None):
         join_room(room_id)
         _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id][2] = None
-        print("$$$$")
-        print(global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id])
         
         emit('Successful Connection')
 
