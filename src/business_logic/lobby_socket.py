@@ -1,5 +1,6 @@
 import logging
 import time
+import uuid
 
 from flask import g, redirect, request, url_for
 from flask_socketio import emit, join_room
@@ -41,7 +42,7 @@ def retrievePlayerContext(player_sid):
     if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS:
         error = "Credentials lost in the internet."
         return None, None, None, error
-    room_id, category_name = global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
+    room_id, category_name, _synchro_id = global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
 
     return  player_id, category_name, room_id, error
 
@@ -120,11 +121,12 @@ def connectToLobby(data=None):
             redirectOutLobby("How did you get here this fast? The host isn't even here yet.")
             return
 
+        synchro_id = str(uuid.uuid4())
         global_state.SOCKETS_TO_SESSIONS[player_sid] = player_id
-        global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, player_sid)
+        global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = [room_id, category_name, synchro_id]
 
         time.sleep(1.4)
-        if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS or global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id][2]!=player_sid:
+        if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS or global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id][2]!=synchro_id:
             del global_state.SOCKETS_TO_SESSIONS[player_sid]
             redirectOutLobby("Looks like the internet is not waiting for us.")
             return
@@ -151,7 +153,9 @@ def connectToLobby(data=None):
 
         join_room(room_id)
         _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
-        global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name)
+        global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id][2] = None
+        print("$$$$")
+        print(global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id])
         
         emit('Successful Connection')
 
