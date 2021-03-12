@@ -121,11 +121,17 @@ def connectToLobby(data=None):
             return
 
         global_state.SOCKETS_TO_SESSIONS[player_sid] = player_id
-        global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name)
+        global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, player_sid)
 
         time.sleep(1.4)
-        if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS or 'garbage_collector' not in lobby_conf:
+        if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS or global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id][2]!=player_sid:
             del global_state.SOCKETS_TO_SESSIONS[player_sid]
+            redirectOutLobby("Looks like the internet is not waiting for us.")
+            return
+
+        if 'garbage_collector' not in lobby_conf:
+            del global_state.SOCKETS_TO_SESSIONS[player_sid]
+            del global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
             redirectOutLobby("Looks like the internet is not waiting for us.")
             return
 
@@ -145,6 +151,7 @@ def connectToLobby(data=None):
 
         join_room(room_id)
         _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
+        global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name)
         
         emit('Successful Connection')
 

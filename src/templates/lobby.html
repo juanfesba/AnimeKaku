@@ -271,7 +271,7 @@
             var text_to_send = document.getElementById("input_lobby_chat").value;
     
             if(text_to_send == ""){
-                window.alert("Write a message to send.");
+                return;
             }
             else if(text_to_send.length>30){
                 window.alert("Please don't send messages that are longer than 30 characters.");
