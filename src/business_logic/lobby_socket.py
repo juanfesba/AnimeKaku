@@ -14,15 +14,37 @@ def redirectOutLobby(error_message):
     emit('Redirect Out')
     return error_message
 
+
 def warningLobby(warning_message):
     emit('Warning')
     return warning_message
+
 
 def beforeAppRequest():
     authentication.load_logged_in_user()
     if g.player_name is None:
         return "Credentials lost in the internet."
     return
+
+
+def retrievePlayerContext(player_sid):
+    error = None
+    if player_sid not in global_state.SOCKETS_TO_SESSIONS:
+        error = "Credentials lost in the internet."
+        return None, None, None, error
+
+    player_id = global_state.SOCKETS_TO_SESSIONS[player_sid]
+    if g.player_id != player_id:
+        error = "Credentials lost in the internet."
+        return None, None, None, error
+
+    if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS:
+        error = "Credentials lost in the internet."
+        return None, None, None, error
+    room_id, category_name = global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
+
+    return  player_id, category_name, room_id, error
+
 
 @socketio.event
 def sendLobbyMessage(data=None):
@@ -36,7 +58,25 @@ def sendLobbyMessage(data=None):
         return
 
     text_to_send = str(data.get('text_to_send'))
-    print(text_to_send)
+    player_sid = request.sid
+    _player_id, _category_name, room_id, err = retrievePlayerContext(player_sid)
+    if err is not None: # TODO: flash error
+        redirectOutLobby(err)
+        return
+
+    player_name = g.player_name
+
+    lobby = common_helpers.retrieveRoomFromID(room_id)
+    if lobby is None:
+        redirectOutLobby("Lobby not found in the internet.")
+        return
+
+    if lobby.lobby_nature != lobby_logic.LobbyNature.IN_LOBBY:
+        warningLobby("Can't send messages when the lobby is already in game.")
+        return
+
+    socketio.emit('Receive Lobby Message', {'sender_name':player_name, 'text_sent':text_to_send}, room=room_id)
+
 
 @socketio.event
 def connectToLobby(data=None):
