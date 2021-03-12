@@ -14,11 +14,29 @@ def redirectOutLobby(error_message):
     emit('Redirect Out')
     return error_message
 
+def warningLobby(warning_message):
+    emit('Warning')
+    return warning_message
+
 def beforeAppRequest():
     authentication.load_logged_in_user()
     if g.player_name is None:
         return "Credentials lost in the internet."
     return
+
+@socketio.event
+def sendLobbyMessage(data=None):
+    err = beforeAppRequest()
+    if err is not None: # TODO: flash error
+        redirectOutLobby(err)
+        return
+
+    if 'text_to_send' not in data:
+        redirectOutLobby("Something happened with your data.")
+        return
+
+    text_to_send = str(data.get('text_to_send'))
+    print(text_to_send)
 
 @socketio.event
 def connectToLobby(data=None):
@@ -32,7 +50,7 @@ def connectToLobby(data=None):
         return
 
     player_sid = request.sid
-    room_id = data.get('room_id')
+    room_id = str(data.get('room_id'))
 
     lobby = common_helpers.retrieveRoomFromID(room_id)
 

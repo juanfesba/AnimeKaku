@@ -176,9 +176,67 @@
             </div>
             </center>
 
-            <hr>
+            <hr><br>
+
             <div id="Players and Chat" class="container">
                 
+                <div class="row">
+                    <div class="col-3">
+                        <center>
+                            <div id="slot_0" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_0" class="card-header">Empty Slot</div>
+                            </div>
+                            <div id="slot_1" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_1" class="card-header">Empty Slot</div>
+                            </div>
+                            <div id="slot_2" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_2" class="card-header">Empty Slot</div>
+                            </div>
+                            <div id="slot_3" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_3" class="card-header">Empty Slot</div>
+                            </div>
+                            <div id="slot_4" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_4" class="card-header">Empty Slot</div>
+                            </div>
+                        </center>
+                    </div>
+                    <div class="col-3">
+                        <center>
+                            <div id="slot_5" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_5" class="card-header">Empty Slot</div>
+                            </div>
+                            <div id="slot_6" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_6" class="card-header">Empty Slot</div>
+                            </div>
+                            <div id="slot_7" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_7" class="card-header">Empty Slot</div>
+                            </div>
+                            <div id="slot_8" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_8" class="card-header">Empty Slot</div>
+                            </div>
+                            <div id="slot_9" class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+                                <div id="slot_player_9" class="card-header">Empty Slot</div>
+                            </div>
+                        </center>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-5">
+                        <center>
+                            <div>
+                                <div id="LobbyChat" style="overflow:auto;height:20rem;border:solid thin gray;text-align:left">
+                                </div>
+                                <br>
+                                <div class="input-group mb-3">
+                                    <input id="input_lobby_chat" type="text" class="form-control" placeholder="Type here..." aria-label="Lobby's username" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                        <button id="input_lobby_button" class="btn btn-outline-danger" type="button" onclick="SendLobbyMessage()">Send Message</button>
+                                     </div>
+                                </div>
+                            </div>
+                        </center>
+                    </div>
+                </div>
+
             </div>
         
         </div>
@@ -202,6 +260,30 @@
             document.getElementById('Loading_Screen').style.display = 'none';
             document.getElementById('Lobby_Page').style.display = 'block';
         });
+
+        socket.on('Receive Lobby Message', function(data){
+            lobby_chat_dom = document.getElementById("LobbyChat");
+            lobby_chat_dom.innerHTML += "<b>" + data.sender_name + ":</b> " + data.text_sent + "<br>";
+            lobby_chat_dom.scrollTop = lobby_chat_dom.scrollHeight;
+        });
+
+        var SendLobbyMessage = function(){
+            var text_to_send = document.getElementById("input_lobby_chat").value;
+    
+            if(text_to_send == ""){
+                window.alert("Write a message to send.");
+            }
+            else if(text_to_send.length>30){
+                window.alert("Please don't send messages that are longer than 30 characters.");
+                // TODO: More regex, like special characters.
+            }
+            else{
+                document.getElementById("input_lobby_chat").value = "";
+                socket.emit('sendLobbyMessage',{
+                    text_to_send : text_to_send
+                });
+            }
+        }
     </script>
 
     <script>
