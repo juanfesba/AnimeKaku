@@ -125,7 +125,7 @@ def connectToLobby(data=None):
         global_state.SOCKETS_TO_SESSIONS[player_sid] = player_id
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = [room_id, category_name, synchro_id]
 
-        time.sleep(1.4)
+        time.sleep(1.1)
         if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS or global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id][2]!=synchro_id:
             del global_state.SOCKETS_TO_SESSIONS[player_sid]
             redirectOutLobby("Looks like the internet is not waiting for us.")
