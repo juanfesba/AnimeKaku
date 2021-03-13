@@ -73,7 +73,7 @@ def sendLobbyMessage(data=None):
         return
 
     if lobby.lobby_nature != lobby_logic.LobbyNature.IN_LOBBY:
-        warningLobby("Can't send messages when the lobby is already in game.")
+        warningLobby("Can't send lobby messages when the game already started.")
         return
 
     socketio.emit('Receive Lobby Message', {'sender_name':player_name, 'text_sent':text_to_send}, room=room_id)
@@ -118,7 +118,7 @@ def connectToLobby(data=None):
 
     if lobby.lobby_nature == lobby_logic.LobbyNature.CREATE_LOBBY:
         if not is_host:
-            redirectOutLobby("How did you get here this fast? The host isn't even here yet.")
+            redirectOutLobby("How did you get here so fast? The host isn't even here yet.")
             return
 
         synchro_id = str(uuid.uuid4())
@@ -134,7 +134,7 @@ def connectToLobby(data=None):
         if 'garbage_collector' not in lobby_conf:
             del global_state.SOCKETS_TO_SESSIONS[player_sid]
             del global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
-            redirectOutLobby("Looks like the internet is not waiting for us.")
+            redirectOutLobby("Looks like the internet is confused with your requests.")
             return
 
         garbage_collector = lobby_conf['garbage_collector']
