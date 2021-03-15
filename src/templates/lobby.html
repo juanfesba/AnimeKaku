@@ -245,7 +245,23 @@
     <script src="https://cdn.socket.io/socket.io-3.0.1.js"></script> <!-- TODO: Not really from us, looks like there is a warning that isn't our fault. -->
 
     <script>
+        var PlayerSlot = function(){
+            var self = {
+                state: 'Empty',
+                name: ''
+            }
+        }
+
+        var Slots = [PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot()];
+        var SlotsQueue = [];
+        var SlotSynchro = false;
+    </script>
+
+    <script>
         var socket = io();
+
+        // Connection and General
+
         socket.on('connect', function() {
             socket.emit('connectToLobby', {
                 room_id : document.getElementById('room_id').innerText,
@@ -260,6 +276,8 @@
             document.getElementById('Loading_Screen').style.display = 'none';
             document.getElementById('Lobby_Page').style.display = 'block';
         });
+
+        // Chat
 
         socket.on('Receive Lobby Message', function(data){
             lobby_chat_dom = document.getElementById("LobbyChat");
@@ -299,8 +317,8 @@
                 document.getElementById("input_lobby_button").click();
             }
         });
-    
-        
+
+
     </script>
 
     {% if is_host %}
