@@ -44,12 +44,15 @@ host_name
 is_private
 lobby_password - not atm
 
-lobby_synchro
 garbage_collector
 
 # In lobby (IN_LOBBY) #
 
 host_sid
+players_version
+players__synchro
+slots_synchro
+game_settings_synchro
 
 @ players - key = pos
 
@@ -59,6 +62,7 @@ player_sid
 
 @ game_settings
 
+version
 game_type
 difficulty
 topic
@@ -86,7 +90,6 @@ class Lobby():
 
             garbage_collector = threading.Timer(15, destroyUnusedLobby, args=(self.room_id, category_name))
             self.lobby_conf['garbage_collector'] = garbage_collector
-            self.lobby_conf['lobby_synchro'] = LobbySynchro.NONE
             garbage_collector.start()
         elif lobby_nature == LobbyNature.IN_LOBBY:
             self.lobby_conf['host_sid'] = lobby_params['player_sid']
@@ -95,15 +98,21 @@ class Lobby():
             host_player['player_id'] = self.lobby_conf['host_id']
             host_player['player_name'] = self.lobby_conf['host_name']
             host_player['player_sid'] = self.lobby_conf['host_sid']
-            players_conf = {0:host_player}
+            players_conf = {0:host_player, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None, 7:None, 8:None, 9:None}
             self.lobby_conf['players'] = players_conf
+            self.lobby_conf['players_version'] = 1
+
+            self.lobby_conf['players_synchro'] = list()
+            self.lobby_conf['slots_synchro'] = {0:None, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None, 7:None, 8:None, 9:None}
+            self.lobby_conf['game_settings_synchro'] = None
 
             category_name = self.lobby_conf['category_name']
             # It shouldn't be necessary to check if the category_name is correct.
             category = definitions.CATEGORIES[category_name]
             topic = category.topics[0]
             filters = topic.filters
-            game_settings = {'game_type':game_logic.GameType.CLASSIC,
+            game_settings = {'version':1,
+                             'game_type':game_logic.GameType.CLASSIC,
                              'difficulty':LobbyDifficulty.CASUAL,
                              'topic':topic.name,
                              'filters':filters}
