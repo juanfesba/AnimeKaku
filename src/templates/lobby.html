@@ -272,6 +272,14 @@
             window.location.href = "/sekai/" + document.getElementById('category_name').innerText;
         });
 
+        socket.on('Initial Status', function(data) {
+            console.log(data['game_settings_version']);
+            console.log(data['game_type']);
+            console.log(data['game_difficulty']);
+            console.log(data['game_topic']);
+            console.log(data['game_filters']);
+        });
+
         socket.on('Successful Connection', function() {
             document.getElementById('Loading_Screen').style.display = 'none';
             document.getElementById('Lobby_Page').style.display = 'block';

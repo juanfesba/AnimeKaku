@@ -5,7 +5,7 @@ import uuid
 from flask import g, redirect, request, url_for
 from flask_socketio import emit, join_room
 from src import kaku_app
-from src.business_logic import global_state, lobby_logic
+from src.business_logic import game_definitions, global_state, lobby_logic
 from src.helpers import common_helpers, data_integrity
 from src.session_connection import authentication
 
@@ -13,12 +13,38 @@ socketio = kaku_app.socketio
 
 def redirectOutLobby(error_message):
     emit('Redirect Out')
-    return error_message
 
 
 def warningLobby(warning_message):
     emit('Warning')
-    return warning_message
+
+
+def sendInitialStatus(game_settings, is_host):
+    game_settings_version = None
+    game_type = None
+    game_difficulty = None
+    game_topic = None
+    game_filters = None
+    # if not is_host:
+    if is_host:
+        game_settings_version = game_settings.get('version')
+
+        game_type = game_settings.get('game_type')
+        game_type = game_definitions.SERIALIZE_GAME_DEFINITIONS[game_type]
+
+        game_difficulty = game_settings.get('difficulty')
+        game_difficulty = game_definitions.SERIALIZE_GAME_DIFFICULTY[game_difficulty]
+
+        game_topic = game_settings.get('topic')
+
+        game_filters = [filter.attribute for filter in game_settings.get('filters')]
+
+
+    emit('Initial Status', {'game_settings_version':game_settings_version,
+                            'game_type':game_type,
+                            'game_difficulty':game_difficulty,
+                            'game_topic':game_topic,
+                            'game_filters':game_filters})
 
 
 def beforeAppRequest():
@@ -102,6 +128,7 @@ def connectToLobby(data=None):
     lobby_conf = lobby.lobby_conf
     if data_integrity.dictIsCorrupted(['category_name', 'host_id'], lobby_conf):
         redirectOutLobby("The data was corrupted :c. Please reload the page.")
+        return
 
     player_id = g.player_id
     host_id = lobby_conf['host_id']
@@ -155,6 +182,7 @@ def connectToLobby(data=None):
         _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, None)
         
+        sendInitialStatus(lobby_conf['game_settings'], is_host)
         emit('Successful Connection')
 
     print("### in lobby_socket.py ###")

@@ -2,7 +2,7 @@ import threading
 import uuid
 
 from src.business_logic import definitions
-from src.business_logic import game_logic
+from src.business_logic import game_definitions
 from src.business_logic import global_state
 from enum import Enum
 
@@ -26,11 +26,6 @@ class LobbySynchro(Enum):
     STARTING_LOBBY = 1
     JOINING_LOBBY = 2
     LEAVING_LOBBY = 3
-
-class LobbyDifficulty(Enum):
-    NONE = 0
-    CASUAL = 1
-    EXTREME = 2
 
 '''
 ### lobby_conf ###
@@ -112,8 +107,8 @@ class Lobby():
             topic = category.topics[0]
             filters = topic.filters
             game_settings = {'version':1,
-                             'game_type':game_logic.GameType.CLASSIC,
-                             'difficulty':LobbyDifficulty.CASUAL,
+                             'game_type':game_definitions.GameType.CLASSIC,
+                             'difficulty':game_definitions.GameDifficulty.CASUAL,
                              'topic':topic.name,
                              'filters':filters}
             self.lobby_conf['game_settings'] = game_settings
