@@ -44,36 +44,36 @@ elements_topic = Topic('Elements')
 
 ### Anime
 
-anime_category = Category('Anime', 'characters')
-anime_category.topics = {"characters":characters_topic,
-                        "titles":titles_topic,
-                        "elements":elements_topic}
+anime_category = Category('Anime', 'Characters')
+anime_category.topics = {"Characters":characters_topic,
+                        "Titles":titles_topic,
+                        "Elements":elements_topic}
 
 ### Serie
 
-serie_category = Category('Serie', 'characters')
-serie_category.topics = {"characters":characters_topic,
-                        "titles":titles_topic,
-                        "elements":elements_topic}
+serie_category = Category('Serie', 'Characters')
+serie_category.topics = {"Characters":characters_topic,
+                        "Titles":titles_topic,
+                        "Elements":elements_topic}
 
 ### Movie
 
-movie_category = Category('Movie', 'characters')
-movie_category.topics = {"characters":characters_topic,
-                        "titles":titles_topic,
-                        "elements":elements_topic}
+movie_category = Category('Movie', 'Characters')
+movie_category.topics = {"Characters":characters_topic,
+                        "Titles":titles_topic,
+                        "Elements":elements_topic}
 
 ### Game
 
-game_category = Category('Game', 'characters')
-game_category.topics = {"characters":characters_topic,
-                        "titles":titles_topic,
-                        "elements":elements_topic}
+game_category = Category('Game', 'Characters')
+game_category.topics = {"Characters":characters_topic,
+                        "Titles":titles_topic,
+                        "Elements":elements_topic}
 
 ### Traditional
 
-traditional_category = Category('Traditional', 'elements')
-traditional_category.topics = {'elements':elements_topic}
+traditional_category = Category('Traditional', 'Elements')
+traditional_category.topics = {'Elements':elements_topic}
 
 #This are the possible 'Sekais' for players to choose.
 CATEGORIES = {'serie' : serie_category,

@@ -13,6 +13,7 @@
     <body>
         <div id='category_name' style="display: none;">{{ category_name }}</div>
         <div id='room_id' style="display: none;">{{ room_id }}</div>
+        <div id='default_topic' style="display: none;">{{ category.default_topic }}</div>
 
         <div id="Loading_Screen">
 
@@ -354,8 +355,8 @@
                 lastTopicSelected = topicSelected;
             }
 
+            document.getElementById("input_choose_topic").value = document.getElementById("default_topic").innerText;
             displayFilterOnTopicSelect();
-
         </script>
 
     {% else %}
