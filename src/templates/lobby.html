@@ -88,7 +88,7 @@
                             <div class="input-group mb-3">
                                 <label class="input-group-text" for="input_choose_topic">Topic:</label>
                                 <select onchange="displayFilterOnTopicSelect()" class="form-select" id="input_choose_topic" name="input_choose_topic">
-                                    {% for topic in category.topics %}
+                                    {% for topic in category.topics.values() %}
                                         <option value={{ topic.name }}>&nbsp{{ topic.name }}&nbsp</option>
                                     {% endfor %}
                                 </select>
@@ -148,7 +148,7 @@
 
                     <!--TODO: Here should be the 'if' to check if there is any Filter. -->
 
-                    {% for topic in category.topics %}
+                    {% for topic in category.topics.values() %}
                         {% for filter in topic.filters %}
                             <div class={{ topic.name ~ '_filter row' }} style="display:none">
 

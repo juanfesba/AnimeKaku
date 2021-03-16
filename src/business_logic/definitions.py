@@ -12,9 +12,10 @@ class Topic():
 
 class Category():
     
-    def __init__(self, name, topics=list()):
+    def __init__(self, name, default_topic, topics=dict()):
         self.name = name
         self.topics = topics
+        self.default_topic = default_topic
 
 ### Filters
 
@@ -43,28 +44,36 @@ elements_topic = Topic('Elements')
 
 ### Anime
 
-anime_category = Category('Anime')
-anime_category.topics = [characters_topic, titles_topic, elements_topic]
+anime_category = Category('Anime', 'characters')
+anime_category.topics = {"characters":characters_topic,
+                        "titles":titles_topic,
+                        "elements":elements_topic}
 
 ### Serie
 
-serie_category = Category('Serie')
-serie_category.topics = [characters_topic, titles_topic, elements_topic]
+serie_category = Category('Serie', 'characters')
+serie_category.topics = {"characters":characters_topic,
+                        "titles":titles_topic,
+                        "elements":elements_topic}
 
 ### Movie
 
-movie_category = Category('Movie')
-movie_category.topics = [characters_topic, titles_topic, elements_topic]
+movie_category = Category('Movie', 'characters')
+movie_category.topics = {"characters":characters_topic,
+                        "titles":titles_topic,
+                        "elements":elements_topic}
 
 ### Game
 
-game_category = Category('Game')
-game_category.topics = [characters_topic, titles_topic, elements_topic] #TODO: Check if we can change this to sets.
+game_category = Category('Game', 'characters')
+game_category.topics = {"characters":characters_topic,
+                        "titles":titles_topic,
+                        "elements":elements_topic}
 
 ### Traditional
 
-traditional_category = Category('Game')
-traditional_category.topics = [elements_topic]
+traditional_category = Category('Traditional', 'elements')
+traditional_category.topics = {'elements':elements_topic}
 
 #This are the possible 'Sekais' for players to choose.
 CATEGORIES = {'serie' : serie_category,
