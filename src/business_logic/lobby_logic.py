@@ -44,8 +44,9 @@ garbage_collector
 # In lobby (IN_LOBBY) #
 
 host_sid
+players_slots
 players_version
-players__synchro
+players_synchro
 slots_synchro
 game_settings_synchro
 
@@ -94,12 +95,11 @@ class Lobby():
             host_player['player_name'] = self.lobby_conf['host_name']
             host_player['player_sid'] = self.lobby_conf['host_sid']
             players_conf = {0:host_player, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None, 7:None, 8:None, 9:None}
-            self.lobby_conf['players'] = players_conf
+            self.lobby_conf['players_slots'] = players_conf
             self.lobby_conf['players_version'] = 1
 
             self.lobby_conf['players_synchro'] = list()
             self.lobby_conf['slots_synchro'] = {0:None, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None, 7:None, 8:None, 9:None}
-            self.lobby_conf['game_settings_synchro'] = None
 
             category_name = self.lobby_conf['category_name']
             # It shouldn't be necessary to check if the category_name is correct.
@@ -112,6 +112,7 @@ class Lobby():
                              'topic':topic.name,
                              'filters':filters.values()}
             self.lobby_conf['game_settings'] = game_settings
+            self.lobby_conf['game_settings_synchro'] = None
             
             self.lobby_nature = LobbyNature.IN_LOBBY
 

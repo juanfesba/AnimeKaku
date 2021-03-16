@@ -283,6 +283,20 @@
                 console.log(data['game_topic']);
                 console.log(data['game_filters']);
             }
+            for(pos in data['player_slots']){
+                var slotValue = data['player_slots'][pos];
+                slot_style = document.getElementById("slot_" + pos);
+			    slot_text = document.getElementById("slot_player_" + pos);
+                if(slotValue === null){
+                    slot_style.className = "card text-white bg-secondary mb-3";
+				    slot_text.innerHTML = "Empty Slot";
+                }
+                else{
+                    slot_style.className = "card text-white bg-danger mb-3";
+				    slot_text.innerHTML = slotValue;
+                }
+            }
+            SLOTS_VERSION = data['players_version'];
         });
 
         socket.on('Successful Connection', function() {

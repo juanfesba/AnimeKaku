@@ -19,16 +19,18 @@ def warningLobby(warning_message):
     emit('Warning')
 
 
-def sendInitialStatus(game_settings, is_host):
-    game_settings_version = None
+def sendInitialStatus(lobby_conf, is_host):
+    player_slots = [None, None, None, None, None, None, None, None, None, None]
+    players_version = lobby_conf['players_version']
+
+    game_settings = lobby_conf['game_settings']
+    game_settings_version = game_settings.get('version')
     game_type = None
     game_difficulty = None
     game_topic = None
     game_filters = None
     # if not is_host:
     if is_host:
-        game_settings_version = game_settings.get('version')
-
         game_type = game_settings.get('game_type')
         game_type = game_definitions.SERIALIZE_GAME_DEFINITIONS[game_type]
 
@@ -39,8 +41,14 @@ def sendInitialStatus(game_settings, is_host):
 
         game_filters = [filter.attribute for filter in game_settings.get('filters')]
 
-
-    emit('Initial Status', {'game_settings_version':game_settings_version,
+    for pos in lobby_conf['players_slots']:
+        player_slot = lobby_conf['players_slots'][pos]
+        if player_slot is not None:
+            player_slot = player_slot.get('player_name')
+        player_slots[pos] = player_slot
+    emit('Initial Status', {'player_slots':player_slots,
+                            'players_version':players_version,
+                            'game_settings_version':game_settings_version,
                             'game_type':game_type,
                             'game_difficulty':game_difficulty,
                             'game_topic':game_topic,
@@ -182,7 +190,7 @@ def connectToLobby(data=None):
         _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, None)
         
-        sendInitialStatus(lobby_conf['game_settings'], is_host)
+        sendInitialStatus(lobby_conf, is_host)
         emit('Successful Connection')
 
     print("### in lobby_socket.py ###")
