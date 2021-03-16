@@ -160,7 +160,7 @@ def connectToLobby(data=None):
         global_state.SOCKETS_TO_SESSIONS[player_sid] = player_id
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, synchro_id)
 
-        time.sleep(1.1)
+        time.sleep(1.2)
         if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS or global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id][2]!=synchro_id:
             del global_state.SOCKETS_TO_SESSIONS[player_sid]
             redirectOutLobby("Looks like the internet is not waiting for us.")
@@ -192,6 +192,52 @@ def connectToLobby(data=None):
         
         sendInitialStatus(lobby_conf, is_host)
         emit('Successful Connection')
+    elif lobby.lobby_nature == lobby_logic.LobbyNature.IN_LOBBY:
+        if is_host:
+            redirectOutLobby("Uhm. Aren't you the host of this lobby?")
+            return
+
+        if data_integrity.dictIsCorrupted(['players_slots', 'players_version', 'players_synchro', 'slots_synchro'], lobby_conf):
+            redirectOutLobby("The data was corrupted :c. Please reload the page.")
+            return
+        synchro_id = str(uuid.uuid4())
+
+        pos = 0
+        for i in range(1, 10):
+            if lobby_conf['players_slots'][i] is None and lobby_conf['slots_synchro'][i] is None:
+                pos = i
+                lobby_conf['slots_synchro'][pos] = synchro_id
+                break
+        if pos == 0:
+            redirectOutLobby("Somebody was quicker, the lobby is sadly full. Try again later or try joining another lobby.")
+            return
+
+        global_state.SOCKETS_TO_SESSIONS[player_sid] = player_id
+        global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, synchro_id)
+        
+        time.sleep(1.2) # TODO: Make this a parameter of this file.
+
+        if lobby_conf['slots_synchro'][pos]!=synchro_id or lobby_conf['players_slots'][pos] is not None:
+            del global_state.SOCKETS_TO_SESSIONS[player_sid]
+            if global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id][2]==synchro_id:
+                del global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
+            redirectOutLobby("Looks like the internet is not waiting for us.")
+            return
+        
+        if player_id not in global_state.SESSIONS_TO_CAT_ROOM_IDS or global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id][2]!=synchro_id:
+            del global_state.SOCKETS_TO_SESSIONS[player_sid]
+            lobby_conf['slots_synchro'][pos] = None
+            redirectOutLobby("Looks like the internet is not waiting for us.")
+            return
+        
+        lobby_params = {'player_sid' : player_sid}
+        #join_room(room_id) ############################
+
+        emit('Successful Connection')
+    else:
+        redirectOutLobby("The lobby you tried to join was not ready for you.")
+        return
+
 
     print("### in lobby_socket.py ###")
     print('player_sid : room_id #', global_state.SOCKETS_TO_SESSIONS)

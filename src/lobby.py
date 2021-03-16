@@ -52,6 +52,17 @@ def inLobby(room_id=None):
                                                                lobby_name=lobby_name,
                                                                is_host=is_host))
         return response
+    elif lobby.lobby_nature == lobby_logic.LobbyNature.IN_LOBBY:
+        if is_host: return returnToCat(request.args)
+
+        category = definitions.CATEGORIES[category_name]
+        response = make_response(render_template('lobby.html', room_id=room_id,
+                                                               player_name=g.player_name,
+                                                               category_name=category_name,
+                                                               category=category,
+                                                               lobby_name=lobby_name,
+                                                               is_host=is_host))
+        return response
     
     response = 'pending :P'
     return response
