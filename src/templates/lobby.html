@@ -14,6 +14,7 @@
         <div id='category_name' style="display: none;">{{ category_name }}</div>
         <div id='room_id' style="display: none;">{{ room_id }}</div>
         <div id='default_topic' style="display: none;">{{ category.default_topic }}</div>
+        <div id='is_host' style="display: none;">{{ is_host }}</div>
 
         <div id="Loading_Screen">
 
@@ -274,11 +275,14 @@
         });
 
         socket.on('Initial Status', function(data) {
-            console.log(data['game_settings_version']);
-            console.log(data['game_type']);
-            console.log(data['game_difficulty']);
-            console.log(data['game_topic']);
-            console.log(data['game_filters']);
+            var is_host = document.getElementById('is_host').innerText;
+            if(is_host == 'False'){
+                console.log(data['game_settings_version']);
+                console.log(data['game_type']);
+                console.log(data['game_difficulty']);
+                console.log(data['game_topic']);
+                console.log(data['game_filters']);
+            }
         });
 
         socket.on('Successful Connection', function() {
