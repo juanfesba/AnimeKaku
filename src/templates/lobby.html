@@ -150,7 +150,7 @@
                     <!--TODO: Here should be the 'if' to check if there is any Filter. -->
 
                     {% for topic in category.topics.values() %}
-                        {% for filter in topic.filters %}
+                        {% for filter in topic.filters.values() %}
                             <div class={{ topic.name ~ '_filter row' }} style="display:none">
 
                                     <div class="col-md"></div>

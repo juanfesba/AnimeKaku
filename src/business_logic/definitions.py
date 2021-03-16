@@ -6,7 +6,7 @@ class Filter():
 
 class Topic():
 
-    def __init__(self, name, filters=list()):
+    def __init__(self, name, filters=dict()):
         self.name = name
         self.filters = filters
 
@@ -35,10 +35,14 @@ action_filter = Filter('Action', 'bool')
 ### Topics - other info:
 
 characters_topic = Topic('Characters')
-characters_topic.filters = [male_filter, female_filter]
+characters_topic.filters = {'Male':male_filter,
+                            'Female':female_filter}
 
 titles_topic = Topic('Titles')
-titles_topic.filters = [romance_filter, drama_filter, comedy_filter, action_filter]
+titles_topic.filters = {'Romance':romance_filter,
+                        'Drama':drama_filter,
+                        'Comedy':comedy_filter,
+                        'Action':action_filter}
 
 elements_topic = Topic('Elements')
 

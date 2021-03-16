@@ -110,7 +110,7 @@ class Lobby():
                              'game_type':game_definitions.GameType.CLASSIC,
                              'difficulty':game_definitions.GameDifficulty.CASUAL,
                              'topic':topic.name,
-                             'filters':filters}
+                             'filters':filters.values()}
             self.lobby_conf['game_settings'] = game_settings
             
             self.lobby_nature = LobbyNature.IN_LOBBY
