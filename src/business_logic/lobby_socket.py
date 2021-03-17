@@ -29,8 +29,7 @@ def sendInitialStatus(lobby_conf, is_host):
     game_difficulty = None
     game_topic = None
     game_filters = None
-    # if not is_host:
-    if is_host:
+    if not is_host:
         game_type = game_settings.get('game_type')
         game_type = game_definitions.SERIALIZE_GAME_DEFINITIONS[game_type]
 

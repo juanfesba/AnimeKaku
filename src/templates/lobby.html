@@ -69,6 +69,7 @@
 
             </div>
 
+            {% if is_host %}
             <center>
             <div id="lobby_settings_form" style="display:none; background-color:#f0f4f8; position:fixed; border-color: black; border-style:solid; border-width: 4px; z-index: 5; margin-left:25%; margin-right:25%; width:50%; border-radius: 25px;">
                 
@@ -177,6 +178,83 @@
 
             </div>
             </center>
+            {% else %}
+            <center>
+            <div id="lobby_settings_form" style="display:none; background-color:#f0f4f8; position:fixed; border-color: black; border-style:solid; border-width: 4px; z-index: 5; margin-left:25%; margin-right:25%; width:50%; border-radius: 25px;">
+                
+                <br>
+                <div class="container">
+
+                    <button onclick="displayLobbySettingsForm('none')" type="button" class="close" aria-label="Close" style="color:red">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                    <b>LOBBY <span style="color:red">SETTINGS</span></b>
+                    <br><br>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+
+                        <div class="col-md">
+                            <center>
+                                <b>Topic:</b><span id="topic_settings_front"></span>
+                            </center>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+
+                        <div class="col-md">
+                            <center>
+                                <b>Settings:</b>
+                            </center>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+
+                        <div class="col-md">
+                            <center>
+                                <u>Difficulty:</u><span id="difficulty_settings_front"></span>
+                            </center>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+
+                        <div class="col-md">
+                            <center>
+                                <b>Filters:</b>
+                            </center>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md"></div>
+
+                        <div class="col-md">
+                            <center>
+                                <span id="filters_settings_front"></span>
+                            </center>
+                        </div>
+                        <div class="col-md"></div>
+                    </div>
+
+                </div>
+                <br>
+
+            </div>
+            </center>
+            {% endif %}
 
             <hr><br>
 
@@ -257,7 +335,10 @@
         var SLOTS = [PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot()];
         var SLOTS_QUEUE = {};
         var SLOTS_VERSION = 0;
-        var OLDEST_VERSION = 9999;
+        var OLDEST_SLOTS_VERSION = 9999;
+
+        var GAME_SETTINGS_VERSION = 0;
+        var OLDEST_GAME_SETTINGS_VERSION = 9999;
 
         function updateSlot(updateData){
             slot_style = document.getElementById("slot_" + updateData.pos);
@@ -299,11 +380,16 @@
         socket.on('Initial Status', function(data) {
             var is_host = document.getElementById('is_host').innerText;
             if(is_host == 'False'){
-                console.log(data['game_settings_version']);
-                console.log(data['game_type']);
-                console.log(data['game_difficulty']);
-                console.log(data['game_topic']);
-                console.log(data['game_filters']);
+                var spaceBeautify = "";
+                GAME_SETTINGS_VERSION = data['game_settings_version'];
+                document.getElementById('topic_settings_front').innerText = " " + data['game_topic'];
+                document.getElementById('difficulty_settings_front').innerText = " " + data['game_difficulty'];
+                document.getElementById('filters_settings_front').innerText = "";
+                for(filter in data['game_filters']){
+                    filter = data['game_filters'][filter];
+                    document.getElementById('filters_settings_front').innerText += spaceBeautify + filter + ";";
+                    spaceBeautify = " ";
+                }
             }
             for(pos in data['player_slots']){
                 var slotValue = data['player_slots'][pos];
@@ -325,7 +411,7 @@
                 updateSlot(updateData);
             }
 
-            var garbageCollector = OLDEST_VERSION;
+            var garbageCollector = OLDEST_SLOTS_VERSION;
             while(garbageCollector<=SLOTS_VERSION){
                 if(garbageCollector in SLOTS_QUEUE)delete SLOTS_QUEUE.garbageCollector;
                 garbageCollector += 1;
@@ -342,7 +428,7 @@
 
         socket.on('New Player Join', function(data) {
             SLOTS_QUEUE[data["players_version"]] = {updateType:"New Player Join", pos:data["pos"], player_name:data["player_name"]};
-            if(data["players_version"] < OLDEST_VERSION)OLDEST_VERSION = data["players_version"];
+            if(data["players_version"] < OLDEST_SLOTS_VERSION)OLDEST_SLOTS_VERSION = data["players_version"];
         });
 
         // Chat
