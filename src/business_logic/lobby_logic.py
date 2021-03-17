@@ -121,3 +121,21 @@ class Lobby():
         print('cat_room_id : lobby #', global_state.CAT_ROOM_IDS_TO_LOBBIES)
 
         return res, error
+
+    def playerJoinLobby(self, player_sid, player_id, player_name, pos):
+        error = None
+        res = None
+
+        player = dict()
+        player['player_id'] = player_id
+        player['player_name'] = player_name
+        player['player_sid'] = player_sid
+
+        if self.lobby_conf['players_slots'][pos] is not None:
+            error = "The data was corrupted :c. Please reload the page."
+            return res, error
+
+        self.lobby_conf['players_slots'][pos] = player
+        #self.lobby_conf['players_version'] = 1
+
+        return res, error

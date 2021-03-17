@@ -188,6 +188,7 @@ def connectToLobby(data=None):
 
         join_room(room_id)
         _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
+
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, None)
         
         sendInitialStatus(lobby_conf, is_host)
@@ -229,10 +230,28 @@ def connectToLobby(data=None):
             lobby_conf['slots_synchro'][pos] = None
             redirectOutLobby("Looks like the internet is not waiting for us.")
             return
-        
-        lobby_params = {'player_sid' : player_sid}
-        #join_room(room_id) ############################
 
+        # TODO: Check if the game is meant to start.
+        
+        lobby_conf['players_synchro'].append("Connect")
+        
+        join_room(room_id)
+        _res, error = lobby.playerJoinLobby(player_sid, player_id, g.player_name, pos)
+        if error is not None:
+            del global_state.SOCKETS_TO_SESSIONS[player_sid]
+            del global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
+            lobby_conf['slots_synchro'][pos] = None
+            lobby_conf['players_synchro'].pop()
+            redirectOutLobby(error)
+            return
+
+        #version, #inform everybody
+
+        global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, None)
+        lobby_conf['slots_synchro'][pos] = None
+        lobby_conf['players_synchro'].pop()
+        
+        #sendInitialStatus(lobby_conf, is_host)
         emit('Successful Connection')
     else:
         redirectOutLobby("The lobby you tried to join was not ready for you.")
