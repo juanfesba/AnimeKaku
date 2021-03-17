@@ -45,7 +45,6 @@ garbage_collector
 
 host_sid
 players_slots
-players_version
 players_synchro
 slots_synchro
 game_settings_synchro
@@ -96,7 +95,6 @@ class Lobby():
             host_player['player_sid'] = self.lobby_conf['host_sid']
             players_slots = {0:host_player, 1:None, 2:None, 3:None, 4:None, 5:None, 6:None, 7:None, 8:None, 9:None}
             self.lobby_conf['players_slots'] = players_slots
-            self.lobby_conf['players_version'] = 1
 
             self.lobby_conf['players_synchro'] = list()
             self.lobby_conf['slots_synchro'] = {1:None, 2:None, 3:None, 4:None, 5:None, 6:None, 7:None, 8:None, 9:None}

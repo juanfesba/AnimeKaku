@@ -21,7 +21,6 @@ def warningLobby(warning_message):
 
 def sendInitialStatus(lobby_conf, is_host):
     player_slots = [None, None, None, None, None, None, None, None, None, None]
-    players_version = lobby_conf['players_version']
 
     game_settings = lobby_conf['game_settings']
     game_settings_version = game_settings.get('version')
@@ -46,7 +45,6 @@ def sendInitialStatus(lobby_conf, is_host):
             player_slot = player_slot.get('player_name')
         player_slots[pos] = player_slot
     emit('Initial Status', {'player_slots':player_slots,
-                            'players_version':players_version,
                             'game_settings_version':game_settings_version,
                             'game_type':game_type,
                             'game_difficulty':game_difficulty,
@@ -198,7 +196,7 @@ def connectToLobby(data=None):
             redirectOutLobby("Uhm. Aren't you the host of this lobby?")
             return
 
-        if data_integrity.dictIsCorrupted(['players_slots', 'players_version', 'players_synchro', 'slots_synchro'], lobby_conf):
+        if data_integrity.dictIsCorrupted(['players_slots', 'players_synchro', 'slots_synchro'], lobby_conf):
             redirectOutLobby("The data was corrupted :c. Please reload the page.")
             return
         synchro_id = str(uuid.uuid4())
@@ -233,20 +231,7 @@ def connectToLobby(data=None):
 
         # TODO: Check if the game is meant to start.
 
-
-        attempts_left = 10 # TODO: Parametrize.
         lobby_conf['players_synchro'].append(synchro_id)
-        time.sleep(0.1)
-        while lobby_conf['players_synchro'][0] != synchro_id:
-            time.sleep(0.1)
-            attempts_left -= 1
-            if attempts_left == 0:
-                del global_state.SOCKETS_TO_SESSIONS[player_sid]
-                del global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
-                lobby_conf['slots_synchro'][pos] = None
-                lobby_conf['players_synchro'].remove(synchro_id)
-                redirectOutLobby("The internet was too strong. We couldn't let you join the lobby.")
-                return
         
         join_room(room_id)
         _res, error = lobby.playerJoinLobby(player_sid, player_id, g.player_name, pos)
@@ -254,21 +239,17 @@ def connectToLobby(data=None):
             del global_state.SOCKETS_TO_SESSIONS[player_sid]
             del global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
             lobby_conf['slots_synchro'][pos] = None
-            lobby_conf['players_synchro'].pop(0)
+            lobby_conf['players_synchro'].remove(synchro_id)
             redirectOutLobby(error)
             return
 
-        lobby_conf['players_version'] += 1
-
-        socketio.emit('New Player Join', {'player_name':g.player_name,
-                                          'pos':pos,
-                                          'players_version':lobby_conf['players_version']}, room=room_id)
+        socketio.emit('New Player Join', {'player_name':g.player_name, 'pos':pos}, room=room_id)
 
         sendInitialStatus(lobby_conf, is_host)
         
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, None)
         lobby_conf['slots_synchro'][pos] = None
-        lobby_conf['players_synchro'].pop(0)
+        lobby_conf['players_synchro'].remove(synchro_id)
         
         emit('Successful Connection')
     else:

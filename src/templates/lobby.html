@@ -334,9 +334,7 @@
         }
 
         var SLOTS = [PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot()];
-        var SLOTS_QUEUE = {};
-        var SLOTS_VERSION = 0;
-        var OLDEST_SLOTS_VERSION = 9999;
+        var SLOTS_QUEUE = [];
 
         var GAME_SETTINGS_VERSION = 0;
         var OLDEST_GAME_SETTINGS_VERSION = 9999;
@@ -351,12 +349,11 @@
         }
 
         function updatePlayers() {
-            if(SLOTS_VERSION+1 in SLOTS_QUEUE){
-                SLOTS_VERSION += 1;
-                var updateData = SLOTS_QUEUE[SLOTS_VERSION];
+            if(SLOTS_QUEUE.length > 0){
+                var updateData = SLOTS_QUEUE[0];
                 updateSlot(updateData);
 
-                delete SLOTS_QUEUE.SLOTS_VERSION;
+                SLOTS_QUEUE.shift();
             }
         
             setTimeout(updatePlayers, 200);
@@ -405,18 +402,6 @@
 				    slot_text.innerHTML = slotValue;
                 }
             }
-            SLOTS_VERSION = data['players_version'];
-
-            if(SLOTS_VERSION in SLOTS_QUEUE){
-                var updateData = SLOTS_QUEUE[SLOTS_VERSION];
-                updateSlot(updateData);
-            }
-
-            var garbageCollector = OLDEST_SLOTS_VERSION;
-            while(garbageCollector<=SLOTS_VERSION){
-                if(garbageCollector in SLOTS_QUEUE)delete SLOTS_QUEUE.garbageCollector;
-                garbageCollector += 1;
-            }
             updatePlayers();
         });
 
@@ -428,8 +413,7 @@
         // Players
 
         socket.on('New Player Join', function(data) {
-            SLOTS_QUEUE[data["players_version"]] = {updateType:"New Player Join", pos:data["pos"], player_name:data["player_name"]};
-            if(data["players_version"] < OLDEST_SLOTS_VERSION)OLDEST_SLOTS_VERSION = data["players_version"];
+            SLOTS_QUEUE.push({updateType:"New Player Join", pos:data["pos"], player_name:data["player_name"]});
         });
 
         // Chat
