@@ -255,8 +255,26 @@
         }
 
         var SLOTS = [PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot(), PlayerSlot()];
-        var SLOTS_QUEUE = [];
+        var SLOTS_QUEUE = {};
         var SLOTS_VERSION = 0;
+        var OLDEST_VERSION = 9999;
+
+        function updatePlayers() {
+            if(SLOTS_VERSION+1 in SLOTS_QUEUE){
+                SLOTS_VERSION += 1;
+                var updateData = SLOTS_QUEUE[SLOTS_VERSION];
+                slot_style = document.getElementById("slot_" + updateData.pos);
+			    slot_text = document.getElementById("slot_player_" + updateData.pos);
+                if(updateData.updateType == "New Player Join"){
+                    slot_style.className = "card text-white bg-danger mb-3";
+				    slot_text.innerHTML = updateData.player_name;
+                }
+
+                delete SLOTS_QUEUE.SLOTS_VERSION;
+            }
+        
+            setTimeout(updatePlayers, 200);
+        }
     </script>
 
     <script>
@@ -297,11 +315,24 @@
                 }
             }
             SLOTS_VERSION = data['players_version'];
+            var garbageCollector = OLDEST_VERSION;
+            while(garbageCollector<=SLOTS_VERSION){
+                if(garbageCollector in SLOTS_QUEUE)delete SLOTS_QUEUE.garbageCollector;
+                garbageCollector += 1;
+            }
+            updatePlayers();
         });
 
         socket.on('Successful Connection', function() {
             document.getElementById('Loading_Screen').style.display = 'none';
             document.getElementById('Lobby_Page').style.display = 'block';
+        });
+
+        // Players
+
+        socket.on('New Player Join', function(data) {
+            SLOTS_QUEUE[data["players_version"]] = {updateType:"New Player Join", pos:data["pos"], player_name:data["player_name"]};
+            if(data["players_version"] < OLDEST_VERSION)OLDEST_VERSION = data["players_version"];
         });
 
         // Chat

@@ -260,7 +260,9 @@ def connectToLobby(data=None):
 
         lobby_conf['players_version'] += 1
 
-        #socketio.emit('Receive Lobby Message', {'sender_name':player_name, 'text_sent':text_to_send}, room=room_id)
+        socketio.emit('New Player Join', {'player_name':g.player_name,
+                                          'pos':pos,
+                                          'players_version':lobby_conf['players_version']}, room=room_id)
 
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, None)
         lobby_conf['slots_synchro'][pos] = None
