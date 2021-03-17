@@ -259,16 +259,20 @@
         var SLOTS_VERSION = 0;
         var OLDEST_VERSION = 9999;
 
+        function updateSlot(updateData){
+            slot_style = document.getElementById("slot_" + updateData.pos);
+            slot_text = document.getElementById("slot_player_" + updateData.pos);
+            if(updateData.updateType == "New Player Join"){
+                slot_style.className = "card text-white bg-danger mb-3";
+                slot_text.innerHTML = updateData.player_name;
+            }
+        }
+
         function updatePlayers() {
             if(SLOTS_VERSION+1 in SLOTS_QUEUE){
                 SLOTS_VERSION += 1;
                 var updateData = SLOTS_QUEUE[SLOTS_VERSION];
-                slot_style = document.getElementById("slot_" + updateData.pos);
-			    slot_text = document.getElementById("slot_player_" + updateData.pos);
-                if(updateData.updateType == "New Player Join"){
-                    slot_style.className = "card text-white bg-danger mb-3";
-				    slot_text.innerHTML = updateData.player_name;
-                }
+                updateSlot(updateData);
 
                 delete SLOTS_QUEUE.SLOTS_VERSION;
             }
@@ -315,6 +319,12 @@
                 }
             }
             SLOTS_VERSION = data['players_version'];
+
+            if(SLOTS_VERSION in SLOTS_QUEUE){
+                var updateData = SLOTS_QUEUE[SLOTS_VERSION];
+                updateSlot(updateData);
+            }
+
             var garbageCollector = OLDEST_VERSION;
             while(garbageCollector<=SLOTS_VERSION){
                 if(garbageCollector in SLOTS_QUEUE)delete SLOTS_QUEUE.garbageCollector;

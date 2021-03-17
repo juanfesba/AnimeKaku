@@ -268,7 +268,7 @@ def connectToLobby(data=None):
         lobby_conf['slots_synchro'][pos] = None
         lobby_conf['players_synchro'].pop(0)
         
-        #sendInitialStatus(lobby_conf, is_host)
+        sendInitialStatus(lobby_conf, is_host)
         emit('Successful Connection')
     else:
         redirectOutLobby("The lobby you tried to join was not ready for you.")
