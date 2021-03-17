@@ -232,8 +232,21 @@ def connectToLobby(data=None):
             return
 
         # TODO: Check if the game is meant to start.
-        
-        lobby_conf['players_synchro'].append("Connect")
+
+
+        attempts_left = 10 # TODO: Parametrize.
+        lobby_conf['players_synchro'].append(synchro_id)
+        time.sleep(0.1)
+        while lobby_conf['players_synchro'][0] != synchro_id:
+            time.sleep(0.1)
+            attempts_left -= 1
+            if attempts_left == 0:
+                del global_state.SOCKETS_TO_SESSIONS[player_sid]
+                del global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
+                lobby_conf['slots_synchro'][pos] = None
+                lobby_conf['players_synchro'].remove(synchro_id)
+                redirectOutLobby("The internet was too strong. We couldn't let you join the lobby.")
+                return
         
         join_room(room_id)
         _res, error = lobby.playerJoinLobby(player_sid, player_id, g.player_name, pos)
@@ -241,15 +254,17 @@ def connectToLobby(data=None):
             del global_state.SOCKETS_TO_SESSIONS[player_sid]
             del global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id]
             lobby_conf['slots_synchro'][pos] = None
-            lobby_conf['players_synchro'].pop()
+            lobby_conf['players_synchro'].pop(0)
             redirectOutLobby(error)
             return
 
-        #version, #inform everybody
+        lobby_conf['players_version'] += 1
+
+        #socketio.emit('Receive Lobby Message', {'sender_name':player_name, 'text_sent':text_to_send}, room=room_id)
 
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, None)
         lobby_conf['slots_synchro'][pos] = None
-        lobby_conf['players_synchro'].pop()
+        lobby_conf['players_synchro'].pop(0)
         
         #sendInitialStatus(lobby_conf, is_host)
         emit('Successful Connection')
