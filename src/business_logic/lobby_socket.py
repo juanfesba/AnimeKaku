@@ -189,9 +189,10 @@ def connectToLobby(data=None):
         join_room(room_id)
         _res, _error = lobby.setLobbyNature(lobby_logic.LobbyNature.IN_LOBBY, lobby_params)
 
+        sendInitialStatus(lobby_conf, is_host)
+
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, None)
         
-        sendInitialStatus(lobby_conf, is_host)
         emit('Successful Connection')
     elif lobby.lobby_nature == lobby_logic.LobbyNature.IN_LOBBY:
         if is_host:
@@ -264,11 +265,12 @@ def connectToLobby(data=None):
                                           'pos':pos,
                                           'players_version':lobby_conf['players_version']}, room=room_id)
 
+        sendInitialStatus(lobby_conf, is_host)
+        
         global_state.SESSIONS_TO_CAT_ROOM_IDS[player_id] = (room_id, category_name, None)
         lobby_conf['slots_synchro'][pos] = None
         lobby_conf['players_synchro'].pop(0)
         
-        sendInitialStatus(lobby_conf, is_host)
         emit('Successful Connection')
     else:
         redirectOutLobby("The lobby you tried to join was not ready for you.")
