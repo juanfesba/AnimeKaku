@@ -119,13 +119,13 @@
                         <center>
                         <div class="col-md">
                             <u>Difficulty:</u>
-                            <div class="form-check">
+                            <div class="form-check" onchange="makeDifficultyCasual()">
                                 <input class="form-check-input" type="radio" name="difficulty_checkbox" id="difficultyCheckBox1" value="Casual" checked>
                                 <label class="form-check-label" for="difficultyCheckBox1">
                                     Casual (Recommended)
                                 </label>
                             </div>
-                            <div class="form-check">
+                            <div class="form-check" onchange="makeDifficultyExtreme()">
                                 <input class="form-check-input" type="radio" name="difficulty_checkbox" id="difficultyCheckBox2" value="Extreme">
                                 <label class="form-check-label" for="difficultyCheckBox2">
                                     Extreme
@@ -153,15 +153,16 @@
 
                     {% for topic in category.topics.values() %}
                         {% for filter in topic.filters.values() %}
-                            <div class={{ topic.name ~ '_filter row' }} style="display:none">
+                            <div class={{ topic.name ~ '_filter' }} style="display:none">
 
                                     <div class="col-md"></div>
 
                                     <center>
                                     <div class="col-md">
                                         <u>{{ filter.attribute }}</u>
+                                        {% set classNameForFilter = topic.name ~ '_filter_checkbox' %}
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="checkbox" name={{ filter.attribute ~ '_' ~ topic.name ~ '_filter' }} value={{ filter.attribute }} checked>
+                                            <input onchange="switchFilter(this)" class={{ classNameForFilter}} type="checkbox" value={{ filter.attribute }} checked>
                                             <label class="form-check-label" for={{ filter.attribute ~ '_filter' }}></label>
                                         </div>
                                     </div>
@@ -490,14 +491,37 @@
                 }
             }
 
-            var displayFilterOnTopicSelect = function () {
+            var sendTopicUpdate = function(topic, filterClassName){
+                var htmlElementsByClass = document.getElementsByClassName(filterClassName);
+                if (htmlElementsByClass.length>0 && htmlElementsByClass[0] != undefined){
+                    for (i = 0; i < htmlElementsByClass.length; i++) {
+                        if(htmlElementsByClass[i].checked)console.log(htmlElementsByClass[i].value);
+                    }
+                }
+            }
+
+            var displayFilterOnTopicSelect = function(){
                 if(lastTopicSelected != ""){
                     displayElementByClass(lastTopicSelected + '_filter', 'none');
                 }
 
                 var topicSelected = document.getElementById("input_choose_topic").value;
+                sendTopicUpdate(topicSelected, topicSelected + '_filter_checkbox');
                 displayElementByClass(topicSelected + '_filter', 'block');
                 lastTopicSelected = topicSelected;
+            }
+
+            var makeDifficultyCasual = function(){
+                console.log("Casual");
+            }
+
+            var makeDifficultyExtreme = function(){
+                console.log("Extreme");
+            }
+
+            var switchFilter = function(filter_element){
+                console.log(filter_element.value);
+                console.log(filter_element.checked);
             }
 
             document.getElementById("input_choose_topic").value = document.getElementById("default_topic").innerText;
